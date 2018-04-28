@@ -125,9 +125,9 @@ class MightyHandler{
 	 var ids;
 	 MightyHandler.tabMousePicker(ids);
       
-      console.log("line 114: \n" + ids);
+      console.log("line 114:tab ids in createmighty you created them to create a new mighty: " + ids);
       if(!ids){
-        console.log("inside the if on 116");
+        console.log("ids is undefined. this means tabMousePicker didnt put a bunch of tabs");
         MightyHandler.mighties[newMightyName] = new MightyTab(newMightyName, ids);
       }
       //console.log(MightyHandler.mighties[newMightyName] + " line79");
@@ -174,3 +174,11 @@ MightyHandler.mighties = [];
 MightyHandler.currentMighty = '';
 
   
+
+
+var contextMenuItem = {
+	hiHow: "fofef"
+
+}
+
+

@@ -1,22 +1,4 @@
 
-
-/*
-function secondpoopy(){
-    console.log("hi this is the popup");
-    //send a requeset to a listener in the background. when he gets 
-}
-*/
-/*
-var a = {message : "sex MONSTERSEX"}
-
-chrome.runtime.sendMessage(a)//, whatToDoWithResponse(response));
-//console.log("a");
-function whatToDoWithResponse(resp){
-    console.log(resp.response);
-}
-*/
-
-
 function newMightyFromPopup(){
     chrome.runtime.sendMessage({content: "initiate creation"}, function(response) {
         console.log(response.farewell);
@@ -32,7 +14,7 @@ function doneMighting(){
             console.log(response.message);
         
         }
-    )
+    ) 
 }
 
 
