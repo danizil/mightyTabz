@@ -2,27 +2,38 @@
 
 {
   
-  "name": "Mighty Tab",
-  "version": "1.0",
-  "description": "allows you to group tabs and give the group a name also danny is super sexy man",
-  "manifest_version": 2,
-  "permissions" : ["tabs","<all_urls>", "contextMenus"],
-  "content_scripts": [
+  	"name": "Mighty Tab",
+  	"version": "1.0",
+  	"description": "allows you to group tabs and give the group a name also danny is super sexy man",
+  	"manifest_version": 2,
+  	"permissions" : [
+		"tabs",
+		"<all_urls>", 
+		"contextMenus"
+	  ],
+	
+	"icons":{
+		"16" : "apple-11.png"
+	},
+	  
+
+    "content_scripts": [
 	  	{
 	  		"matches": ["<all_urls>"],
 	  		"js": ["content.js"]
 	  	}
-  ],
-  "background": {  
-    "scripts" : ["background.js"]
-  },
+	  ],
+	  
+  	"background": {  
+    	"scripts" : ["background.js"]
+  	},
   
-  "browser_action" :{
-     "default_icon" : "apple-11.png",
-     "default_popup": "MightyPopup.html",
-     "default_title": "uh sexy danny"
+  	"browser_action" :{
+    	 "default_icon" : "apple-11.png",
+     	"default_popup": "MightyPopup.html",
+     	"default_title": "uh sexy danny"
 
-  } 
+  	} 
   
 
 }

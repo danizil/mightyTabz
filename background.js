@@ -1,184 +1,231 @@
  ///<reference path="chrome-api-vsdoc.js"/>
-//import * as Mighty from "header";
+ var contextMenuItemParent = {
+	"id": "addToMighty",
+	"title": "Add to Mighty",
+	"contexts": ["all"]
+	
+};
 
-//chrome.browserAction.onClicked.addListener(createMighty);
-/*
-chrome.runtime.onMessage.addListener(whatToDoWithMessage(request, sender, sendResponse));
-
-function whatToDoWithMessage(request, sender, sendResponse){
-  if(request.message){
-    console.log(request.message);
-    sendResponse({response: "background to popup"});
-  }
-}
-*/
-var popupShowMakeOrDone = "make";
-
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-        if (request.content == "make or done"){
-            if(popupShowMakeOrDone == "make"){
-              sendResponse({message: "showMake"});
-             // popupShowMakeOrDone = "done";
-            }  
-            else if(popupShowMakeOrDone = "done"){
-              sendResponse({message: "showDone"});
-              //popupShowMakeOrDone = "make";
-            }
+chrome.contextMenus.create(contextMenuItemParent);
 
 
-
-        }
-
-      }
-);
-
-
-chrome.runtime.onMessage.addListener(
-  	function(request, sender, sendResponse) {
-    		if (request.content == "initiate creation"){
-			console.log(request.content + " line 39");
-			MightyHandler.createMighty("news");
-			//activate(); 
-			console.log(MightyHandler.mighties["news"] + "line22");
-			sendResponse({farewell: "created mighty "});
-		}
-    }    
-);
-  
-
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-
-	if(request.message == "done mighting"){
-		console.log("line 52" + request.message); 
-		//chrome.tabs.onActiveChanged.removeEventListener(tabAdder());
-		chrome.tabs.onActivated.removeListener();
-		console.log("55: ");
-		popupShowMakeOrDone = "make";
-	 
-		sendResponse({message: "145 in background sent this"}); 
+//when starting the extension unpin all tabs
+chrome.tabs.query({},function(tabs){
+	var amountOfOpenTabs = tabs.length;
+	//unpin all tabs
+	for(var i = 0; i < amountOfOpenTabs; i++){
+			chrome.tabs.update(tabs[i].id, {pinned: false});
+		
 	}
 
- }
-)
-/*  
-function activate(){ //gets user input and makes new mighty
-    
-  chrome.tabs.query({}, 
-    function(tabList){ //remember query returns an ARRAY
-      if(tabList){
-        chrome.tabs.move(tabList[0].id, {index: -1})
-        //chrome.tabs.highlight({tabs: 0});
-      }
-    }
-  )
-    //here is where you will take user input
-  MightyHandler.createMighty("news")
-  
+})
+
+//the listener to the request to unpin all
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+	if(request.request == "unpin all"){
+		MightyHandlerBackground.currentMighty = "none"
+		chrome.tabs.query({pinned: true},function(tabs){
+			for(let elt in tabs){
+				chrome.tabs.update(tabs[elt].id, {pinned: false});
+			}
+		})
+	}
+})
+
+
+//sends the popup a list of tabs to put on the html
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+	if(request.message == "what mighties are there"){
+		var mightyNameList = [];
+		var i = 0;
+		for(let mighty in MightyHandlerBackground.mighties){
+		
+			mightyNameList[i] = mighty;
+			i++; 
+		}
+		
+		sendResponse({mighties: mightyNameList, current: MightyHandlerBackground.currentMighty});
+	}
+})
+
+
+//listener to bring all mighties together
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+	console.log(JSON.stringify(request))
+	if(request.request == "gatherMighty"){
+		MightyHandlerBackground.mighties[request.mighty].bringTogether();
+		MightyHandlerBackground.currentMighty = request.mighty;
+		sendResponse({request: "mighties gathered"});
+	}
+})
+
+
+//make a new mighty
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	if (request.identifier == "new mighty"){
+		//console.log("97: " + request.newMightysName);
+		newName = request.newMightysName;
+		if(newName == ""){
+			newName = "Mighty #" + (len(MightyHandlerBackground.mighties) + 1);
+		//	console.log("21: empty str, the name is " +newName);
+		}
+		MightyHandlerBackground.createMighty(newName);
+		//console.log("99: " + JSON.stringify(MightyHandlerBackground.mighties));
+	}
 }
-*/
+);
 
 
-
-
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	if (request.request == "remove"){
+		delete MightyHandlerBackground.mighties[request.toRemove]
+		chrome.contextMenus.remove(request.toRemove)
+		sendResponse({backGroundToPopup: "finished"})
+		}
+	
+		
+	
+})
 
 
 
 
 class MightyTab {  //make members private
-    constructor(n, idList){  
-      this.name = n;
-      this.tabIds = idList;
-      //console.log(this.tabIds + "line53 in mighty constructor");
-    }
+	constructor(n){  
+		this.name = n;
+		this.tabURLs = {};
+		this.tabUrlsList = [];
 
-    addTab(tabId){
-    
-    }
+	}
 
-}
+	addTab(url){
+		var l = len(this.tabURLs);
 
-MightyTab.prototype.toString = function printMighty(){
-  tbr = "name: " + this.name + "   tabs: " + this.tabIds; 
-  return tbr;
-}
+		if(!this.tabURLs[url]){
+			this.tabURLs[url] = url; //remember this dict can only be accessed with tabURLs[] and not url.str....
+			this.tabUrlsList[l] = url
 
+			MightyHandlerBackground.currentMighty = "none"
+		}
 
-
-
+	}
 
 
-class MightyHandler{
-  //mighty arr saves the id of the first tab in each mighty
-    static createMighty(name = false){
-
-      var newMightyName;
-
-      if(!name){
-       newMightyName = 'Mighty ' + (MightyHandler.mighties.length + 1);
-      }
-      else{
-       newMightyName = name;
-      }
-      
-      //this is where you choose the tabs for this mighty
-      popupShowMakeOrDone = "done";
-	 var ids;
-	 MightyHandler.tabMousePicker(ids);
-      
-      console.log("line 114:tab ids in createmighty you created them to create a new mighty: " + ids);
-      if(!ids){
-        console.log("ids is undefined. this means tabMousePicker didnt put a bunch of tabs");
-        MightyHandler.mighties[newMightyName] = new MightyTab(newMightyName, ids);
-      }
-      //console.log(MightyHandler.mighties[newMightyName] + " line79");
-    }
-
-
-
-    
-    static destroyMighty(name){
-      
-    }
-    
-    static tabMousePicker(idsToReturn){
-        
-        	chrome.tabs.onActivated.addListener(function tabAdder(tab){
-			console.log("145: "+tab.tabId);
-			console.log("146: "+ popupShowMakeOrDone);
+	bringTogether(){
 		
-			chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
-				if(request.message == "done mighting"){
-					console.log("151: yo it worked yo");
-					chrome.tabs.onActivated.removeListener(tabAdder);
+		//var tabUrlsList = this.turnUrlsIntoListOfIds();
+		var amountOfTabsInMighty = this.tabUrlsList.length;
+		var theNameOfTheMighty = this.name
+		
+		if(theNameOfTheMighty != MightyHandlerBackground.currentMighty){//this is problematic because if you change the moghty you need to switch
+		
+			//gets ids of the mightys url
+			chrome.tabs.query({url: this.tabUrlsList}, function(tabs){
+				var ids = [];
+				if(tabs){	
+					//creates an array of interger ids
+		
+					for(var i = 0; i < tabs.length; i++){
+						ids[i] = tabs[i].id;
+					
+					} 
+				
+		 			chrome.tabs.move(ids,{index: 0}, function(taben){
+						chrome.tabs.query({},function(tabs2){
+		
+							//pin and unpin the proper tabs
+							
+							for(var tab in tabs2){
+		
+								if(Object.values(ids).includes(tabs2[tab].id)){//release the pinned mighty members
+									
+									if(tabs2[tab].pinned){
+		
+										chrome.tabs.update(tabs2[tab].id, {pinned: false});
+									}
+								}
+								else if(!tabs2[tab].pinned){//pin released not members
+		
+									chrome.tabs.update(tabs2[tab].id, {pinned: true});
+								}
+							}
+						})
+					})					
 				}
+			})
+		}
+	}
 
+
+
+
+}//end of class mightytab
+MightyTab.prototype.toString = function printMighty(){
+	tbr = "name: " + this.name + "   tabs: " + JSON.stringify(this.tabURLs); 
+	return tbr;
+}
+
+
+
+
+
+
+
+var globalVar
+
+
+
+
+
+
+class MightyHandlerBackground{
+	//mighty arr saves the id of the first tab in each mighty
+		static createMighty(name){
+			if (name in MightyHandlerBackground.mighties){
+				return;
+			}
+			MightyHandlerBackground.mighties[name] = new MightyTab(name);
+			chrome.contextMenus.create({
+				"id" : name,
+				"title" : name,
+				"parentId": "addToMighty",
+				"contexts": ["all"]
+			})
+			chrome.contextMenus.onClicked.addListener(function(clickData, tab){
+				
+				MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.url);
+				console.log("187: " + tab.url)
+				//console.log("73: mighty tab " + MightyHandlerBackground.mighties[clickData.menuItemId]);
+				//console.log("67: menu item id " + clickData.menuItemId);
+				//console.log("68: tab id:  " + tab.id)
 			});
+		}
+	
+
 		
-			if(tab){
-			var strTabId = tab.tabId.toString()
-			//console.log("158: " + strTabId);
-			idsToReturn.strTabId = tab.tabId;
-			//console.log("160idsToReturn.strTabId: "+idsToReturn.strTabId)
-			for(let thing in ids){ 
-				console.log("134idsToReturn[thing]: " + idsToReturn[thing]);
-			}
-			}
+		static destroyMighty(name){
 
 		}
-		);
 		
+		
+}
+MightyHandlerBackground.mighties = {};
+MightyHandlerBackground.currentMighty = '';
+
+
+
+
+function len(obj) {
+	
+	if(obj){
+		return Object.keys(obj).length;
 	}
-	 
-}
-MightyHandler.mighties = [];
-MightyHandler.currentMighty = '';
+	
+	else{
+		return 0;
+	}
+ }
 
-  
 
-
-var contextMenuItem = {
-	hiHow: "fofef"
-
-}
 
 
