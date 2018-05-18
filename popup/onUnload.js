@@ -1,21 +1,29 @@
+///<reference path="C:\Users\User\Documents\לימודים\comps\chrome_extensions\mightyTab\mightyTab\chrome-api-vsdoc.js"/>
 
-//the unpin all list button
-var listItem = document.createElement("li");
+ //this file is the setup for the popup window. all things that set up when it opens
+
+
+
+
+//this makes the unpin all list button whenever the popup html loads
+//NOTICE: this is quite important since chrome will not allow you to have an onclick event in your html
+                        //this is so that the browser can check all functionality you add to the html to be dandy
+var listItem = document.getElementById("unpin all button")
 listItem.innerHTML = "Unpin All";
 listItem.addEventListener('click', sendMessageToUnpinAll);
-document.getElementById("listOfMighties").appendChild(listItem);
-function sendMessageToUnpinAll(){
-    chrome.runtime.sendMessage({request: "unpin all"}, function(response){
-        MightyManager.changeCurr('');
-        console.log("10 change curr")
-    })
-}
 
 
-//build a class to house all the functions that send messages
+
+//sets the window of the popup to my variable
+var windowInWhichPopupIs = "something"
+
+
+
 
 
 //send a message upon opening the popup to get all open mighties and put them on the popup
+
+            //X make it send the request to the window that its in
 document.addEventListener('DOMContentLoaded', function(){
     chrome.runtime.sendMessage({message: "what mighties are there"},function(response){
         if(response.mighties){
@@ -62,69 +70,8 @@ document.addEventListener('DOMContentLoaded', function(){
     })
      
 })
-    
-//makes all tabs of the specific mighty appear at the same place
-function sendMessageToGatherMighty(){
-    //console.log("30: " + this.innerHTML)
-    var theHtmlInsideTheListItem = this.innerHTML
-    chrome.runtime.sendMessage({request: "gatherMighty", mighty: theHtmlInsideTheListItem}, function(response){
+ 
 
-        if(response.request == "mighties gathered"){
-            console.log("60: " + this.innerHTML)
-            MightyManager.changeCurr(theHtmlInsideTheListItem)
-            
-        }
-    })
-}
-
-function sendMessageToRemoveMighty(){
-    //console.log("81: the parent of the remove button" + this.parentElement)
-    var nameToRemove = this.parentElement.id;
-    chrome.runtime.sendMessage({request: "remove", toRemove: nameToRemove},function(response){
-        var listItemToRemove = document.getElementById(nameToRemove);
-        console.log("84: " + listItemToRemove)
-        document.getElementById("listOfMighties").removeChild(listItemToRemove);
-    })
-}
-
-
-//what to do when the form is submitted
+//assigns functionality to submitting the new mighty name
 document.getElementById("mightyForm").addEventListener("submit", sendInputToBackground)
 
-
-function sendInputToBackground(){
-    var newName = document.getElementById("nameInput").value;
-    console.log("36:  the submitted name:" + newName);
-    chrome.runtime.sendMessage({identifier: "new mighty", newMightysName: newName}, function(response){
-    })
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-class MightyManager{
-
-    static changeCurr(newMighty){
-        console.log("98: curr mighty" + MightyManager.currMighty)
-        console.log("98: newmighty" + newMighty)
-        if(MightyManager.currMighty){
-            document.getElementById(MightyManager.currMighty).style.color = "black";
-        }
-        if(newMighty){
-            document.getElementById(newMighty).style.color = "red";
-        }
-        MightyManager.currMighty = newMighty;
-
-    }
-
-}
-MightyManager.currMighty = '';

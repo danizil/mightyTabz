@@ -9,7 +9,8 @@
   	"permissions" : [
 		"tabs",
 		"<all_urls>", 
-		"contextMenus"
+		"contextMenus",
+		"storage"
 	  ],
 	
 	"icons":{
@@ -25,11 +26,17 @@
 	  ],
 	  
   	"background": {  
-    	"scripts" : ["background.js"]
+		"scripts" : ["background/onUnload.js", 
+					 "background/listeners.js", 
+					 "background/contextMenus.js", 
+					 "background/MightyHandler.js", 
+					 "background/MightyTab.js",
+					 "background/WindowHandler.js"
+					]
   	},
   
   	"browser_action" :{
-    	 "default_icon" : "apple-11.png",
+    	"default_icon" : "apple-11.png",
      	"default_popup": "MightyPopup.html",
      	"default_title": "uh sexy danny"
 
