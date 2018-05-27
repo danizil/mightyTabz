@@ -1,37 +1,29 @@
+///<reference path="C:\Users\User\Documents\לימודים\comps\chrome_extensions\mightyTab\mightyTab\chrome-api-vsdoc.js"/>
+
 //when starting the extension unpin all tabs
 chrome.tabs.query({},function(tabs){
 	var amountOfOpenTabs = tabs.length;
 	//unpin all tabs
-	for(var i = 0; i < amountOfOpenTabs; i++){
+	for(var i = amountOfOpenTabs - 1 ; i >-1; i--){
 			chrome.tabs.update(tabs[i].id, {pinned: false});
 		
 	}
 })
 
+StorageSyncher.mightyFixerUnload()
 
 
 
 
 
+function isEmpty(obj) {
+    for(var prop in obj) {
+        if(obj.hasOwnProperty(prop))
+            return false;
+    }
 
-
-
-
-class storageSyncher{ //this should work when the browser is being closed
-	static addMightyToStorage(name){
-		chrome.storage.sync.set({name: []})
-	}
-	static addTabToMightyInStorage(mightyName, tabId){
-		chrome.storage.sync.get([mightyName], function(result){ //if mightyName is not in storage result will be an empty object yaani {}
-			result.mightyName.push(tabid);
-			console.log(result.mightyName);
-		})
-	}
+    return JSON.stringify(obj) === JSON.stringify({});
 }
-
-
-
-
 
 
 function len(obj) {
@@ -44,7 +36,3 @@ function len(obj) {
 		return 0;
 	}
  }
-
-
-
-

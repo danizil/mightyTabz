@@ -20,8 +20,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 			for(let mighty in MightyHandlerBackground.mighties){
 			
 				mightyNameList[i] = mighty;
+				
 				i++; 
 			}
+	//		console.log(MightyHandlerBackground.mighties)
 		}
 		sendResponse({mighties: mightyNameList, current: MightyHandlerBackground.currentMighty});
 		
@@ -31,7 +33,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 
 //listener to bring all mighties together
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-	console.log(JSON.stringify(request))
+	//console.log(JSON.stringify(request))
 	if(request.request == "gatherMighty"){
 		MightyHandlerBackground.mighties[request.mighty].bringTogether();
 		MightyHandlerBackground.currentMighty = request.mighty;
@@ -43,13 +45,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 //make a new mighty
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	if (request.identifier == "new mighty"){
-		//console.log("97: " + request.newMightysName);
 		newName = request.newMightysName;
 		if(newName == ""){
 			newName = "Mighty #" + (len(MightyHandlerBackground.mighties) + 1);
 		//	console.log("21: empty str, the name is " +newName);
 		}
 		MightyHandlerBackground.createMighty(newName);
+		//console.log(MightyHandlerBackground.mighties)
 		//console.log("99: " + JSON.stringify(MightyHandlerBackground.mighties));
 	}
 }
@@ -67,14 +69,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	
 })
 
+//sync memory on move
+chrome.tabs.onMoved.addListener(function (moved){
+	StorageSyncher.sync()
+})
 
 
 
 
 
 
-
-
+/*
 
 //window close save all mighties IMPORTANT TO KEEP THIS ORDER OF CLOSERS CAUSE THIS IS THE FIRST LISTENER
 
@@ -114,3 +119,4 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeWithoutWindow){
 			//all that remains is to remove it from the list, or MAKE THE LIST A METHOD
 	}
 })
+*/

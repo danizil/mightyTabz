@@ -10,7 +10,8 @@
 		"tabs",
 		"<all_urls>", 
 		"contextMenus",
-		"storage"
+		"storage",
+		"sessions"
 	  ],
 	
 	"icons":{
@@ -26,12 +27,13 @@
 	  ],
 	  
   	"background": {  
-		"scripts" : ["background/onUnload.js", 
-					 "background/listeners.js", 
+		"scripts" : ["background/listeners.js", 
 					 "background/contextMenus.js", 
 					 "background/MightyHandler.js", 
 					 "background/MightyTab.js",
-					 "background/WindowHandler.js"
+					 "background/WindowHandler.js",
+					 "background/StorageSyncher.js",
+					 "background/onUnload.js"
 					]
   	},
   

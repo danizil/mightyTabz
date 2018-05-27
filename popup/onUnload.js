@@ -26,6 +26,7 @@ var windowInWhichPopupIs = "something"
             //X make it send the request to the window that its in
 document.addEventListener('DOMContentLoaded', function(){
     chrome.runtime.sendMessage({message: "what mighties are there"},function(response){
+        console.log(response.mighties)
         if(response.mighties){
             mightiesStringArr = response.mighties;
             MightyManager.currMighty = response.current;
@@ -73,5 +74,6 @@ document.addEventListener('DOMContentLoaded', function(){
  
 
 //assigns functionality to submitting the new mighty name
+//NOTICE: everytime the form is submitted, the html reloads!!
 document.getElementById("mightyForm").addEventListener("submit", sendInputToBackground)
 
