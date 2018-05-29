@@ -1,8 +1,8 @@
 class StorageSyncher{    
     static sync(){//can make tis kind for when moved only, for efficiency. for now will do this for all
         console.log("in sync")
-        var mightiesTitles = {};
-        for(var mighty in MightyHandlerBackground.mighties){
+        let mightiesTitles = {};
+        for(let mighty in MightyHandlerBackground.mighties){
             mightiesTitles[mighty] = new MightyTab(mighty)
         }
         
@@ -17,57 +17,41 @@ class StorageSyncher{
             for(let mighty in MightyHandlerBackground.mighties){
                                     //console.log("im in the first loop on the mighties. the mighty im on is: " + mighty)
                 if(MightyHandlerBackground.mighties[mighty].tabIdsList[0] != undefined){    
-                    for(let i in MightyHandlerBackground.mighties[mighty].tabIdsList){ //all the gets happen completely seperately
+                    for(let i in MightyHandlerBackground.mighties[mighty].tabIdsList){ 
                                         //console.log("index loop, i am on index: " + i)
                         var tabid = MightyHandlerBackground.mighties[mighty].tabIdsList[i]
                                                     // console.log("the id of the " + i + "'th list member is" + tabid + "we are now using tabs.get(id, callback)")
                                                     // console.log("goimg to get with mighty" + mighty)
-                        chrome.tabs.get(tabid, function(tab){ //the problem is here. all the vars: tabid, mighty
+                        chrome.tabs.get(tabid, function(tab){ 
                                                     //console.log("the mighty im on after get is:" + mighty)
-                            var tabTitle = tab.title
+                            let tabTitle = tab.title
                                                     //console.log("the tab with id:" + MightyHandlerBackground.mighties[mighty].tabIdsList[i] + " is on index " + tabTitle)
                             
-                            var l = mightiesTitles[mighty].tabIdsList.length
+                            let l = mightiesTitles[mighty].tabIdsList.length
                                                     //console.log("the last member of the index list of mightyINDX " + mighty + "is " + (l - 1))
                             
                             mightiesTitles[mighty].tabIdsList.push(tabTitle)
                             
                                                     // console.log("after the push it is :" + (l - 1))
                                                     // console.log("on the next command this will be pushed into storage: " + JSON.stringify(mightiesTitles))
-                            
+                            console.log("this is what will be put in storage:" + JSON.stringify(mightiesTitles))
                             chrome.storage.local.set({'mightiesTitles': mightiesTitles})// this probably takes a bunch of time...
-                                                    // console.log("the mightyHandler mighty background members are still:")
-                                                    // console.log(MightyHandlerBackground.mighties)
+                                console.log("the mightyHandler mighty background members are still:" + JSON.stringify(MightyHandlerBackground.mighties))
                         })
                     }
                 }
                 else{
-                                                    // console.log("the mighty" + mighty + "was empty, so entered the else. i shall set this into mempory: ")
-                                                    // console.log(mightiesTitles)
+                    console.log("the mighty" + mighty + "was empty, so entered the else. i shall set this into mempory: ")
+                    console.log(mightiesTitles)
                     chrome.storage.local.set({'mightiesTitles': mightiesTitles})
                 }
 
             }
         }
         else{
-            console.log(MightyHandlerBackground.mighties)
+            console.log("sync: mightyhandler.mighties is empty: " + JSON.stringify(MightyHandlerBackground.mighties) + "so the storage has been set to {}")
             chrome.storage.local.set({'mightiesTitles': {}})
-            
-            //test
-            console.log(MightyHandlerBackground.mighties)
-            chrome.storage.local.get('mightiesTitles', function(response){
-                console.log("next line is what i took out of storage, after setting it a few commands again")
-                console.log(JSON.stringify(response.mightiesTitles))
-                })    
-        
         }
-
-        
-        /*
-        chrome.storage.local.set({'mighties' : MightyHandlerBackground.mighties}, function(result){
-            console.log(result.mighties + "something to say")
-        })
-        */
     }
 
     static mightyFixerUnload(){

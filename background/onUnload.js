@@ -10,7 +10,17 @@ chrome.tabs.query({},function(tabs){
 	}
 })
 
+
+
+
 StorageSyncher.mightyFixerUnload()
+
+
+
+
+
+
+
 
 
 

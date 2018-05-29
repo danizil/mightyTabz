@@ -85,15 +85,6 @@ chrome.tabs.onMoved.addListener(function (moved){
 })
 
 
-chrome.tabs.onRemoved.addListener(function(tabid){
-	StorageSyncher.sync()
-})
-
-
-
-
-
-
 /*
 
 //window close save all mighties IMPORTANT TO KEEP THIS ORDER OF CLOSERS CAUSE THIS IS THE FIRST LISTENER
@@ -118,13 +109,24 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeWithoutWindow){//this is
 
 */
 chrome.windows.onRemoved.addListener(function(something){
-	console.log(MightyHandlerBackground.mighties)
-	for(let mighty in MightyHandlerBackground.mighties){
-		console.log(MightyHandlerBackground.mighties[mighty])
-	}
+	console.log("you colsed a window. the mighties in the mightylisty are: " + JSON.stringify(MightyHandlerBackground.mighties))
+	chrome.storage.local.get('mightiesTitles', function(gotten){
+		console.log("you colsed the window, this is what you saved in the storage (after storage.local.get): " + JSON.stringify(gotten.mightiesTitles))
+	})
 })
-//tab removal, removes tab from mighty
-removeWithoutWindow = {isWindowClosing: "false"}
+
+//tab removal, removes tab from mighty. this is shitty and will be changed
+
+var mainWindow //this is a patch. will later be changed to a window class with mightywindow handler whatever
+var mainWindowId
+var removeWithoutWindow
+chrome.windows.getCurrent(function(window){
+	mainWindow = window
+	mainWindowId = mainWindow.id
+	console.log(mainWindowId)
+	removeWithoutWindow = {windowId: mainWindowId ,isWindowClosing: "false"}
+})
+
 chrome.tabs.onRemoved.addListener(function(tabId, removeWithoutWindow){
 	for(let mighty in MightyHandlerBackground.mighties){
 		if(MightyHandlerBackground.mighties[mighty].tabIdsList.indexOf(tabId) > -1){
