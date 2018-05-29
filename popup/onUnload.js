@@ -8,15 +8,13 @@
 //this makes the unpin all list button whenever the popup html loads
 //NOTICE: this is quite important since chrome will not allow you to have an onclick event in your html
                         //this is so that the browser can check all functionality you add to the html to be dandy
-var listItem = document.getElementById("unpin all button")
-listItem.innerHTML = "Unpin All";
-listItem.addEventListener('click', sendMessageToUnpinAll);
+var unpinAllListItem = document.getElementById("unpin all button")
+unpinAllListItem.innerHTML = "Unpin All";
+unpinAllListItem.addEventListener('click', sendMessageToUnpinAll);
 
-
-
-//sets the window of the popup to my variable
-var windowInWhichPopupIs = "something"
-
+// var refreshTabsInMightiesListItem = document.getElementById("unpin all button")
+// refreshTabsInMightiesListItem.innerHTML = "Refresh Mighties From Storage";
+// refreshTabsInMightiesListItem.addEventListener('click', sendMessageToUpdateMightiesFromStorage);
 
 
 

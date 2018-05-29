@@ -23,6 +23,14 @@ function sendMessageToGatherMighty(){
     })
 }
 
+
+/*
+function sendMessageToUpdateMightiesFromStorage(){
+    chrome.runtime.sendMessage({request: "get tabs from storage"})
+}
+*/
+
+
 //when remove button is closed 
 function sendMessageToRemoveMighty(){
     //console.log("81: the parent of the remove button" + this.parentElement)

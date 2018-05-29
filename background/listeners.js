@@ -11,6 +11,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 })
 
 
+// chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+// 	if(request.request == "get tabs from storage"){
+// 		chrome.storage.local.get('mightiesTitles', function(gotten){
+//             console.log("what was saved in the storage, now on unload:")  
+//             console.log(JSON.stringify(gotten.mightiesTitles))
+// 			StorageSyncher.mightyFixerUnload()
+// 		})
+// 	}
+
+
 //sends the popup a list of tabs to put on the  popup html, this is for when the popup window opens
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	if(request.message == "what mighties are there"){
@@ -75,6 +85,11 @@ chrome.tabs.onMoved.addListener(function (moved){
 })
 
 
+chrome.tabs.onRemoved.addListener(function(tabid){
+	StorageSyncher.sync()
+})
+
+
 
 
 
@@ -101,16 +116,17 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeWithoutWindow){//this is
 
 	})
 
+*/
 chrome.windows.onRemoved.addListener(function(something){
 	console.log(MightyHandlerBackground.mighties)
-	for(var mighty in MightyHandlerBackground.mighties){
+	for(let mighty in MightyHandlerBackground.mighties){
 		console.log(MightyHandlerBackground.mighties[mighty])
 	}
 })
 //tab removal, removes tab from mighty
 removeWithoutWindow = {isWindowClosing: "false"}
 chrome.tabs.onRemoved.addListener(function(tabId, removeWithoutWindow){
-	for(var mighty in MightyHandlerBackground.mighties){
+	for(let mighty in MightyHandlerBackground.mighties){
 		if(MightyHandlerBackground.mighties[mighty].tabIdsList.indexOf(tabId) > -1){
 			console.log("tablist before removal: " + JSON.stringify(MightyHandlerBackground.mighties[mighty].tabIdsList))
 			MightyHandlerBackground.mighties[mighty].removeTab(tabId);
@@ -119,4 +135,3 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeWithoutWindow){
 			//all that remains is to remove it from the list, or MAKE THE LIST A METHOD
 	}
 })
-*/

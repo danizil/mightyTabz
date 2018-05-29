@@ -1,16 +1,16 @@
 class StorageSyncher{    
     static sync(){//can make tis kind for when moved only, for efficiency. for now will do this for all
         console.log("in sync")
-        var mightiesINDXS = {};
+        var mightiesTitles = {};
         for(var mighty in MightyHandlerBackground.mighties){
-            mightiesINDXS[mighty] = new MightyTab(mighty)
+            mightiesTitles[mighty] = new MightyTab(mighty)
         }
         
-        //var mightiesINDXS = JSON.parse(JSON.stringify(MightyHandlerBackground.mighties))//deep
-                        //console.log("logging mightiesINDXS to see if it really is an object of mighties with empty lists:" + JSON.stringify(mightiesINDXS))
+        //var mightiesTitles = JSON.parse(JSON.stringify(MightyHandlerBackground.mighties))//deep
+                        //console.log("logging mightiesTitles to see if it really is an object of mighties with empty lists:" + JSON.stringify(mightiesTitles))
                         //console.log("now the mightyhandler.mighties: ")
                         //console.log(MightyHandlerBackground.mighties)
-                        //console.log(mightiesINDXS["Mighty #1"].tabIdsList[0]) //this test shows that before nulling everything there was something there
+                        //console.log(mightiesTitles["Mighty #1"].tabIdsList[0]) //this test shows that before nulling everything there was something there
         
         if(!isEmpty(MightyHandlerBackground.mighties)){ //I see no choice other than to put this if because the mempory 
                                                         //set needs to happen at the end of the callback chain
@@ -24,18 +24,18 @@ class StorageSyncher{
                                                     // console.log("goimg to get with mighty" + mighty)
                         chrome.tabs.get(tabid, function(tab){ //the problem is here. all the vars: tabid, mighty
                                                     //console.log("the mighty im on after get is:" + mighty)
-                            var tabIndex = tab.index
-                                                    //console.log("the tab with id:" + MightyHandlerBackground.mighties[mighty].tabIdsList[i] + " is on index " + tabIndex)
+                            var tabTitle = tab.title
+                                                    //console.log("the tab with id:" + MightyHandlerBackground.mighties[mighty].tabIdsList[i] + " is on index " + tabTitle)
                             
-                            var l = mightiesINDXS[mighty].tabIdsList.length
+                            var l = mightiesTitles[mighty].tabIdsList.length
                                                     //console.log("the last member of the index list of mightyINDX " + mighty + "is " + (l - 1))
                             
-                            mightiesINDXS[mighty].tabIdsList.push(tabIndex)
+                            mightiesTitles[mighty].tabIdsList.push(tabTitle)
                             
                                                     // console.log("after the push it is :" + (l - 1))
-                                                    // console.log("on the next command this will be pushed into storage: " + JSON.stringify(mightiesINDXS))
+                                                    // console.log("on the next command this will be pushed into storage: " + JSON.stringify(mightiesTitles))
                             
-                            chrome.storage.local.set({'mightiesINDXS': mightiesINDXS})// this probably takes a bunch of time...
+                            chrome.storage.local.set({'mightiesTitles': mightiesTitles})// this probably takes a bunch of time...
                                                     // console.log("the mightyHandler mighty background members are still:")
                                                     // console.log(MightyHandlerBackground.mighties)
                         })
@@ -43,20 +43,21 @@ class StorageSyncher{
                 }
                 else{
                                                     // console.log("the mighty" + mighty + "was empty, so entered the else. i shall set this into mempory: ")
-                                                    // console.log(mightiesINDXS)
-                    chrome.storage.local.set({'mightiesINDXS': mightiesINDXS})
+                                                    // console.log(mightiesTitles)
+                    chrome.storage.local.set({'mightiesTitles': mightiesTitles})
                 }
 
             }
         }
         else{
             console.log(MightyHandlerBackground.mighties)
-            chrome.storage.local.set({'mightiesINDXS': {}})
+            chrome.storage.local.set({'mightiesTitles': {}})
             
             //test
             console.log(MightyHandlerBackground.mighties)
-            chrome.storage.local.get('mightiesINDXS', function(response){
-                console.log(response.mightiesINDXS)
+            chrome.storage.local.get('mightiesTitles', function(response){
+                console.log("next line is what i took out of storage, after setting it a few commands again")
+                console.log(JSON.stringify(response.mightiesTitles))
                 })    
         
         }
@@ -70,34 +71,34 @@ class StorageSyncher{
     }
 
     static mightyFixerUnload(){
-        //1) gets mightiesINDXS from background, an item quite like mighties but with index list instead of tablist
-            //2) copies mightiesINDXS to mighties.
-                //3) for all mighties in mightiesINDXS, for every list item, 
+        //1) gets mightiesTitles from background, an item quite like mighties but with index list instead of tablist
+            //2) copies mightiesTitles to mighties.
+                //3) for all mighties in mightiesTitles, for every list item, 
                 //   query that index and on callback append the tab's id to Handler.mighties[mighty].tabIdsList        
                     //4) console.log(mighties)
 
 
-        //1) gets mightiesINDXS from background, an item quite like mighties but with index list instead of id list
+        //1) gets mightiesTitles from background, an item quite like mighties but with index list instead of id list
 
-        chrome.storage.local.get('mightiesINDXS', function(gotten){
-                             // console.log("what was saved in the storage, now on unload:")  
-                            //console.log(gotten.mightiesINDXS)
-            
-            if(gotten.mightiesINDXS == undefined){// supposed to work only on first run
+        chrome.storage.local.get('mightiesTitles', function(gotten){
+            console.log("what was saved in the storage, now on unload:")  
+            console.log(JSON.stringify(gotten.mightiesTitles))
+
+            if(gotten.mightiesTitles == undefined){// supposed to work only on first run
                 
                 StorageSyncher.sync()
                             //    console.log("mighties were undefined before this")
             }
             
             else{       
-                 //2) copies mightiesINDXS to mighties.
-                                            //  console.log(gotten.mightiesINDXS)
-                for(let mighty in gotten.mightiesINDXS){
+                 //2) copies mightiesTitles to mighties.
+                                            //  console.log(gotten.mightiesTitles)
+                for(let mighty in gotten.mightiesTitles){
                     MightyHandlerBackground.mighties[mighty] = new MightyTab(mighty)
                 }
                                     
-                //somewhere mightiesINDXS got deleted
-                for(let mighty in gotten.mightiesINDXS){
+                //somewhere mightiesTitles got deleted
+                for(let mighty in gotten.mightiesTitles){
                     //make context menu item
                     chrome.contextMenus.create({
                         "id" : mighty,
@@ -108,12 +109,12 @@ class StorageSyncher{
                     chrome.contextMenus.onClicked.addListener(function(clickData, tab){
                 //        console.log(typeof(MightyHandlerBackground.mighties[clickData.menuItemId]))
                         MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id); //were the classes not created yet?
-                //        console.log("the tab title and id that has been added by clicking the cM item: " + tab.title + " " + tab.id)
+                 //       console.log("the tab title and id that has been added by clicking the cM item: " + tab.title + " " + tab.id)
                         //StorageSyncher.sync();
                         });
-                    for(let i in gotten.mightiesINDXS[mighty].tabIdsList){
-                //        console.log("this is in for loist: "+ gotten.mightiesINDXS[mighty].tabIdsList[i])
-                        chrome.tabs.query({index: gotten.mightiesINDXS[mighty].tabIdsList[i]}, function(tabs){
+                    for(let i in gotten.mightiesTitles[mighty].tabIdsList){
+                //        console.log("this is in for loist: "+ gotten.mightiesTitles[mighty].tabIdsList[i])
+                        chrome.tabs.query({title: gotten.mightiesTitles[mighty].tabIdsList[i]}, function(tabs){
                 //            console.log("gonna push the id: " + tabs[0].id + "into " + mighty + "mighty tab")
                             MightyHandlerBackground.mighties[mighty].tabIdsList.push(tabs[0].id)
                             
