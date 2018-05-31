@@ -127,13 +127,25 @@ chrome.windows.getCurrent(function(window){
 	removeWithoutWindow = {windowId: mainWindowId ,isWindowClosing: "false"}
 })
 
+var date = new Date()
+var now = date.getTime()
+console.log(now)
+
 chrome.tabs.onRemoved.addListener(function(tabId, removeWithoutWindow){
-	for(let mighty in MightyHandlerBackground.mighties){
-		if(MightyHandlerBackground.mighties[mighty].tabIdsList.indexOf(tabId) > -1){
-			console.log("tablist before removal: " + JSON.stringify(MightyHandlerBackground.mighties[mighty].tabIdsList))
-			MightyHandlerBackground.mighties[mighty].removeTab(tabId);
-			//console.log("tablist after removal: " + JSON.stringify(MightyHandlerBackground.mighties[mighty].tabIdsList))
+	let old_t = now;
+	delete date
+	let date = new Date();
+	now = date.getTime()
+	let dt = now - old_t;
+	console.log(dt)
+	if(dt > 100){
+		for(let mighty in MightyHandlerBackground.mighties){
+			if(MightyHandlerBackground.mighties[mighty].tabIdsList.indexOf(tabId) > -1){
+				console.log("tablist before removal: " + JSON.stringify(MightyHandlerBackground.mighties[mighty].tabIdsList))
+				MightyHandlerBackground.mighties[mighty].removeTab(tabId);
+				//console.log("tablist after removal: " + JSON.stringify(MightyHandlerBackground.mighties[mighty].tabIdsList))
+			}
+				//all that remains is to remove it from the list, or MAKE THE LIST A METHOD
 		}
-			//all that remains is to remove it from the list, or MAKE THE LIST A METHOD
 	}
 })
