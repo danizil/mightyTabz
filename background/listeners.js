@@ -108,12 +108,14 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeWithoutWindow){//this is
 	})
 
 */
+/*
 chrome.windows.onRemoved.addListener(function(something){
 	console.log("you colsed a window. the mighties in the mightylisty are: " + JSON.stringify(MightyHandlerBackground.mighties))
 	chrome.storage.local.get('mightiesTitles', function(gotten){
 		console.log("you colsed the window, this is what you saved in the storage (after storage.local.get): " + JSON.stringify(gotten.mightiesTitles))
 	})
 })
+*/
 
 //tab removal, removes tab from mighty. this is shitty and will be changed
 
