@@ -2,8 +2,8 @@ class MightyManager{
 
     static changeCurr(newMighty){
         console.log("98: curr mighty is: " + MightyManager.currMighty)
-        console.log("98: newmighty" + newMighty)
-        if(MightyManager.currMighty){
+        console.log("98: newmighty is: " + newMighty)
+        if(MightyManager.currMighty != '' && MightyManager.currMighty != 'none'){
             document.getElementById(MightyManager.currMighty + "Written").style.color = "black"
         }
        
