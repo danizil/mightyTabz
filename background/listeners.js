@@ -1,7 +1,7 @@
 //the listener to the request to unpin all
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	if(request.request == "unpin all"){
-		MightyHandlerBackground.currentMighty = "none"
+		MightyHandlerBackground.currentMighty = ""
 		chrome.tabs.query({pinned: true},function(tabs){
 			for(let elt in tabs){
 				chrome.tabs.update(tabs[elt].id, {pinned: false});
@@ -11,14 +11,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 })
 
 
-// chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-// 	if(request.request == "get tabs from storage"){
-// 		chrome.storage.local.get('mightiesTitles', function(gotten){
-//             console.log("what was saved in the storage, now on unload:")  
-//             console.log(JSON.stringify(gotten.mightiesTitles))
-// 			StorageSyncher.mightyFixerUnload()
-// 		})
-// 	}
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+	if(request.request == "collect mightyless"){
+		MightyHandlerBackground.currentMighty = ""
+		MightyHandlerBackground.collectMightyless()
+	}
+	
+})
+
+
 
 
 //sends the popup a list of tabs to put on the  popup html, this is for when the popup window opens

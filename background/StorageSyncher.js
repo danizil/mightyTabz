@@ -97,7 +97,7 @@ class StorageSyncher{
                         //StorageSyncher.sync();
                         });
                     for(let i in gotten.mightiesTitles[mighty].tabIdsList){
-                //        console.log("this is in for loist: "+ gotten.mightiesTitles[mighty].tabIdsList[i])
+                        console.log("this is in for loist: "+ gotten.mightiesTitles[mighty].tabIdsList[i])
                         chrome.tabs.query({title: gotten.mightiesTitles[mighty].tabIdsList[i]}, function(tabs){
                 //            console.log("gonna push the id: " + tabs[0].id + "into " + mighty + "mighty tab")
                             MightyHandlerBackground.mighties[mighty].tabIdsList.push(tabs[0].id)

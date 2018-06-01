@@ -9,6 +9,17 @@ function sendMessageToUnpinAll(){
     })
 }
 
+function sendMessageToCollectMightyless(){
+    // if(MightyManager.currMighty != ''){
+    //     let oldCurrListItem = document.getElementById(MightyManager.currMighty + "Written")
+    //     oldCurrListItem.style.color = "black"
+    // }
+    chrome.runtime.sendMessage({request: "collect mightyless"}, function(response){
+        MightyManager.changeCurr('');
+        console.log("listItemsFuncs change curr to:" + MightyManager.currMighty)
+    })
+}
+
     
 //makes all tabs of the specific mighty appear at the same place
 function sendMessageToGatherMighty(){

@@ -12,9 +12,10 @@ var unpinAllListItem = document.getElementById("unpin all button")
 unpinAllListItem.innerHTML = "Unpin All";
 unpinAllListItem.addEventListener('click', sendMessageToUnpinAll);
 
-// var refreshTabsInMightiesListItem = document.getElementById("unpin all button")
-// refreshTabsInMightiesListItem.innerHTML = "Refresh Mighties From Storage";
-// refreshTabsInMightiesListItem.addEventListener('click', sendMessageToUpdateMightiesFromStorage);
+
+var unassociatedsListItem = document.getElementById("mightyless button")
+unassociatedsListItem.innerHTML = "Mightyless Tabs";
+unassociatedsListItem.addEventListener('click', sendMessageToCollectMightyless);
 
 
 
