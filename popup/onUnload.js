@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 
                 list.insertBefore(listItem, list.childNodes[0]);
                 if(writtenPart.innerHTML == MightyManager.currMighty){
-                    listItem.style.color = "red";
+                    writtenPart.style.color = "red";
                 }
                
                 var removeButton = document.createElement("button");
