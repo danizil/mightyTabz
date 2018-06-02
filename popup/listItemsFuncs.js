@@ -20,6 +20,11 @@ function sendMessageToCollectMightyless(){
     })
 }
 
+function sendMessageToRestoreMighties(){
+    chrome.runtime.sendMessage({request: "restore mighties"}, function(response){
+        MightyManager.changeCurr('');
+    })
+}
     
 //makes all tabs of the specific mighty appear at the same place
 function sendMessageToGatherMighty(){

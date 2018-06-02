@@ -21,6 +21,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 })
 
 
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+	if(request.request == "restore mighties"){
+		MightyHandlerBackground.currentMighty = ""
+		StorageSyncher.mightyFixerUnload()
+	}
+	
+})
 
 
 //sends the popup a list of tabs to put on the  popup html, this is for when the popup window opens

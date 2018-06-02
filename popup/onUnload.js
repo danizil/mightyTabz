@@ -18,6 +18,10 @@ unassociatedsListItem.innerHTML = "Mightyless Tabs";
 unassociatedsListItem.addEventListener('click', sendMessageToCollectMightyless);
 
 
+var reveiveListItem = document.getElementById("revive after crash")
+reveiveListItem.innerHTML = "Revive"
+reveiveListItem.addEventListener('click', sendMessageToRestoreMighties)
+
 
 
 //send a message upon opening the popup to get all open mighties and put them on the popup
