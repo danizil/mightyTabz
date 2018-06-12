@@ -27,7 +27,8 @@
 	  ],
 	  
   	"background": {  
-		"scripts" : ["background/listeners.js", 
+		"scripts" : ["background/miscFunctions.js",
+					"background/listeners.js", 
 					 "background/contextMenus.js", 
 					 "background/MightyHandler.js", 
 					 "background/MightyTab.js",

@@ -7,7 +7,7 @@
 
 //this makes the unpin all list button whenever the popup html loads
 //NOTICE: this is quite important since chrome will not allow you to have an onclick event in your html
-                        //this is so that the browser can check all functionality you add to the html to be dandy
+//this is so that the browser can check all functionality you add to the html to be dandy
 var unpinAllListItem = document.getElementById("unpin all button")
 unpinAllListItem.innerHTML = "Unpin All";
 unpinAllListItem.addEventListener('click', sendMessageToUnpinAll);
@@ -19,25 +19,20 @@ unassociatedsListItem.addEventListener('click', sendMessageToCollectMightyless);
 
 
 var reveiveListItem = document.getElementById("revive after crash")
-reveiveListItem.innerHTML = "Revive"
+reveiveListItem.innerHTML = "Revive After crash"
 reveiveListItem.addEventListener('click', sendMessageToRestoreMighties)
 
 
 
-//send a message upon opening the popup to get all open mighties and put them on the popup
-
-            //X make it send the request to the window that its in
 document.addEventListener('DOMContentLoaded', function(){
     chrome.runtime.sendMessage({message: "what mighties are there"},function(response){
-        console.log(response.mighties)
         if(response.mighties){
             mightiesStringArr = response.mighties;
             MightyManager.currMighty = response.current;
             var l = mightiesStringArr.length;
             var list = document.getElementById("listOfMighties") 
-            //console.log("10: "+ l)
+
             for(var i = 0; i < l ; i++ ){
-                console.log(i);
                 var listItem = document.createElement("li");
                 listItem.id = mightiesStringArr[i];
 

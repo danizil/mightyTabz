@@ -15,11 +15,8 @@ class MightyHandlerBackground{
             "contexts": ["all"]
         })
         chrome.contextMenus.onClicked.addListener(function(clickData, tab){
-            MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id);
-            console.log("the tab title and id that has been added by clicking the cM item: " + tab.title + " " + tab.id)
-            
+            MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id); 
         });
-        //console.log(MightyHandlerBackground.mighties)
         StorageSyncher.sync();
         
     
@@ -31,12 +28,9 @@ class MightyHandlerBackground{
         let mightyToDestroy = MightyHandlerBackground.mighties[name]
         for(let index in mightyToDestroy.tabIdsList){ //deletes all of the tabids list
             delete mightyToDestroy.tabIdsList[index]
-            console.log("deleted a tab from the mighty tab. now the list is: " + mightyToDestroy.tabIdsList)
         }
         delete MightyHandlerBackground.mighties[name]
         chrome.contextMenus.remove(name)
-        // console.log(name + "is being deleted")
-        // console.log(MightyHandlerBackground.mighties)
         StorageSyncher.sync();
     }
   
@@ -50,24 +44,20 @@ class MightyHandlerBackground{
                     tabsInMighties.push(MightyHandlerBackground.mighties[mighty].tabIdsList[i])
                 }
             }
-            
-            console.log("test if tabsInMighties is an array of ids: " + tabsInMighties)
-            
+             
             for(let i in tabs){
                 let id = tabs[i].id;
                 if(tabsInMighties.indexOf(id) == -1){
                     mightylessList.push(id)
                 }
             }
-            console.log("unassociateds list: " + mightylessList)
-
             let zombieMighty = new MightyTab("zombie", mightylessList)
-            console.log("zombie mighty: " + JSON.stringify(zombieMighty))
             zombieMighty.bringTogether();
         })
     }
 		
 }
 MightyHandlerBackground.mighties = {}
+MightyHandlerBackground.backupMighties = {}
 MightyHandlerBackground.currentMighty = '';
 
