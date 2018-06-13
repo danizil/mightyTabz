@@ -24,7 +24,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	if(request.request == "revive button pressed"){
 		MightyHandlerBackground.currentMighty = ""
-		MightyHandlerBackground.mighties = MightyHandlerBackground.backupMighties
+		MightyHandlerBackground.mighties = {}
+		for(mighty in MightyHandlerBackground.backupMighties){
+			MightyHandlerBackground.mighties[mighty] = new MightyTab(mighty, MightyHandlerBackground.backupMighties[mighty].tabIdsList)
+		}
+		StorageSyncher.sync()
 	}
 	
 })
@@ -112,6 +116,7 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeWithoutWindow){
 		for(let mighty in MightyHandlerBackground.mighties){
 			if(MightyHandlerBackground.mighties[mighty].tabIdsList.indexOf(tabId) > -1){
 				MightyHandlerBackground.mighties[mighty].removeTab(tabId);
+				MightyHandlerBackground.backupMighties[mighty].removeTab(tabId)
 			}
 				//all that remains is to remove it from the list, or MAKE THE LIST A METHOD
 		}
