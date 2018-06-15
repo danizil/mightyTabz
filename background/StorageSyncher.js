@@ -4,7 +4,7 @@ class StorageSyncher{
         for(let mighty in MightyHandlerBackground.mighties){
             mightiesTitles[mighty] = new MightyTab(mighty)
         }
-        
+        console.log("mightyhandlerbackground.mighties in sync when entering the ffor loop on alll mighties" + JSON.stringify(MightyHandlerBackground.mighties))
         if(!isEmpty(MightyHandlerBackground.mighties)){ //I see no choice other than to put this if because the mempory 
                                                         //set needs to happen at the end of the callback chain
             for(let mighty in MightyHandlerBackground.mighties){

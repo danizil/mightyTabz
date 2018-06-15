@@ -12,18 +12,17 @@ class MightyTab {  //make members private
 		if(this.tabIdsList.indexOf(id) == -1 ){
 			this.tabIdsList[l] = id
 			MightyHandlerBackground.currentMighty = "none"
+			StorageSyncher.sync();
 		}
-
-		StorageSyncher.sync();
-		
 	}
 
 	removeTab(tabId){
 		if(this.tabIdsList.indexOf(tabId) > -1){
 			var indexToRemove = this.tabIdsList.indexOf(tabId);
 			this.tabIdsList.splice(indexToRemove, 1);
+			StorageSyncher.sync()
 		}
-		StorageSyncher.sync()
+		
 	}
 
 	
