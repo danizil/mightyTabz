@@ -87,12 +87,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	
 })
 
-//sync memory on move
-/*
-chrome.tabs.onMoved.addListener(function (moved){
-	StorageSyncher.sync()
-})
-*/
 /*maybe add a way to automatically add to mighty? not sure how to make it comfortable...
 chrome.tabs.onCreated.addListener(function(created){
 	console.log(created.openerTabId)
