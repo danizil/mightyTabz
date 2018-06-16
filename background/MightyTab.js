@@ -9,10 +9,20 @@ class MightyTab {  //make members private
 
 	addTab(id){
 		var l = this.tabIdsList.length;
-		if(this.tabIdsList.indexOf(id) == -1 ){
+		if(this.tabIdsList.indexOf(id) == -1 && id > 0){
+			console.log( "the mighty before addition of the tab" + JSON.stringify(this))
 			this.tabIdsList[l] = id
+			console.log( "the mighty after addition of the tab" + JSON.stringify(this))
 			MightyHandlerBackground.currentMighty = "none"
 			StorageSyncher.sync();
+		}
+		else{
+			if(this.tabIdsList.indexOf(id) != -1){
+				console.log("this tab is already in mighty " + this)
+			}
+			else if (id<=0){
+				console.log("the value of id doesn't fit the get functions. the value is: " + id)
+			}
 		}
 	}
 
@@ -29,6 +39,7 @@ class MightyTab {  //make members private
 	bringTogether(){
 		
 		//var tabIdsList = this.turnUrlsIntoListOfIds();
+		console.log("the mighty that is being bought together is: \n" + JSON.stringify(MightyHandlerBackground.mighties))
 		var amountOfTabsInMighty = this.tabIdsList.length;
 		var theNameOfTheMighty = this.name
 		var listOfTabsInMighty = this.tabIdsList

@@ -1,6 +1,7 @@
 class StorageSyncher{    
     static sync(){//can make tis kind for when moved only, for efficiency. for now will do this for all
         let mightiesTitles = {};
+        console.log("in the begining of sync, mighties are:\n" + JSON.stringify(MightyHandlerBackground.mighties))
         for(let mighty in MightyHandlerBackground.mighties){
             mightiesTitles[mighty] = new MightyTab(mighty)
         }
@@ -10,12 +11,17 @@ class StorageSyncher{
                 if(MightyHandlerBackground.mighties[mighty].tabIdsList[0] != undefined){    
                     for(let i in MightyHandlerBackground.mighties[mighty].tabIdsList){ 
                         var tabid = MightyHandlerBackground.mighties[mighty].tabIdsList[i]
-                        chrome.tabs.get(tabid, function(tab){ 
-                            let tabTitle = tab.title
-                            let l = mightiesTitles[mighty].tabIdsList.length
-                            mightiesTitles[mighty].tabIdsList.push(tabTitle)
-                            chrome.storage.local.set({'mightiesTitles': mightiesTitles})// this probably takes a bunch of time...
-                        })
+                        if(tabid>0){
+                            chrome.tabs.get(tabid, function(tab){ 
+                                if(tab != undefined){   
+                                    let tabTitle = tab.title
+                                    let l = mightiesTitles[mighty].tabIdsList.length
+                                    mightiesTitles[mighty].tabIdsList.push(tabTitle)
+                                    chrome.storage.local.set({'mightiesTitles': mightiesTitles})// this probably takes a bunch of time...
+                                }
+                            
+                            })
+                        }
                     }
                 }
                 else{

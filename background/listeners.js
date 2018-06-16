@@ -25,9 +25,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	if(request.request == "revive button pressed"){
 		MightyHandlerBackground.currentMighty = ""
 		MightyHandlerBackground.mighties = {}
+		console.log("in revive function, mighties afte zeroed out: \n" + JSON.stringify(MightyHandlerBackground.mighties))
+		console.log("the backup mighties: \n" + JSON.stringify(MightyHandlerBackground.backupMighties))
 		for(mighty in MightyHandlerBackground.backupMighties){
 			MightyHandlerBackground.mighties[mighty] = new MightyTab(mighty, MightyHandlerBackground.backupMighties[mighty].tabIdsList)
 		}
+		console.log("in revive, mighties after replaced with backup mighties: \n" + JSON.stringify(MightyHandlerBackground.mighties))
 		StorageSyncher.sync()
 	}
 	
