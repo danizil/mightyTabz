@@ -19,7 +19,7 @@ class StorageSyncher{
                                     mightiesTitles[mighty].tabIdsList.push(tabTitle)
                                     chrome.storage.local.set({'mightiesTitles': mightiesTitles})// this probably takes a bunch of time...
                                 }
-                            
+                        
                             })
                         }
                     }

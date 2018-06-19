@@ -23,6 +23,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	if(request.request == "revive button pressed"){
+
 		MightyHandlerBackground.currentMighty = ""
 		MightyHandlerBackground.mighties = {}
 		console.log("in revive function, mighties afte zeroed out: \n" + JSON.stringify(MightyHandlerBackground.mighties))
