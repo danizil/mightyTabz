@@ -53,11 +53,19 @@ class StorageSyncher{
             else{       
                  //2) copies mightiesTitles to mighties.
                 for(let mighty in gotten.mightiesTitles){
-                    MightyHandlerBackground.mighties[mighty] = new MightyTab(mighty)
-                    MightyHandlerBackground.backupMighties[mighty] = new MightyTab(mighty)
-                    }
-                                    
-                //somewhere mightiesTitles got deleted
+                    //MightyHandlerBackground.mighties[mighty] = new MightyTab(mighty)
+                    MightyHandlerBackground.backupMighties[mighty] = new MightyTab(mighty, gotten.mightiesTitles[mighty].tabIdsList)
+                }
+
+                console.log("unloading backup mighties:\n" + JSON.stringify(MightyHandlerBackground.backupMighties))
+                    
+                
+                StorageSyncher.turnTitleMightyListIntoMightiesList(gotten.mightiesTitles)
+              
+              
+              
+              
+                /*
                 for(let mighty in gotten.mightiesTitles){
                     //make context menu item
                     chrome.contextMenus.create({
@@ -69,18 +77,53 @@ class StorageSyncher{
                     chrome.contextMenus.onClicked.addListener(function(clickData, tab){
                         MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id); 
                         });
+                    
+                    
+                    
                     for(let i in gotten.mightiesTitles[mighty].tabIdsList){
                         chrome.tabs.query({title: gotten.mightiesTitles[mighty].tabIdsList[i]}, function(tabs){
                             MightyHandlerBackground.mighties[mighty].tabIdsList.push(tabs[0].id)
                             MightyHandlerBackground.backupMighties[mighty].tabIdsList.push(tabs[0].id)
                         })
                     }
+                
                         
                 }
 
-
+                */
             }
 
         })
+    }
+
+
+
+
+    static turnTitleMightyListIntoMightiesList(mightiesTitles){
+        for(let mighty in mightiesTitles){
+            MightyHandlerBackground.mighties[mighty] = new MightyTab(mighty)
+            //make context menu item
+            chrome.contextMenus.create({
+                "id" : mighty,
+                "title" : mighty,
+                "parentId": "addToMighty",
+                "contexts": ["all"]
+                })
+            chrome.contextMenus.onClicked.addListener(function(clickData, tab){
+                MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id); 
+                });
+            if(mighty == "jupyter"){console.log("the tab ids list for jupyter:\n" + mightiesTitles[mighty].tabIdsList)}
+            
+            if(mightiesTitles[mighty].tabIdsList != []){
+                for(let i in mightiesTitles[mighty].tabIdsList){
+                    console.log("in turn titles into ids in the second loop\n" + JSON.stringify(mightiesTitles[mighty].tabIdsList[i]))
+                    chrome.tabs.query({title: mightiesTitles[mighty].tabIdsList[i]}, function(tabs){
+                        MightyHandlerBackground.mighties[mighty].tabIdsList.push(tabs[0].id)
+                        //MightyHandlerBackground.backupMighties[mighty].tabIdsList.push(tabs[0].id)
+                    })
+                }
+            }
+                
+        }
     }
 }//end of class storage syncher b

@@ -6,4 +6,13 @@
 	
 };
 
+/*
+var contextMenuOpenInNewTabInMightyParent = {
+	"id": "OpenInNewTabInMighty",
+	"title": "Open Link In New Tab In Mighty:",
+	"contexts": ["link"]
+}
+*/
+
 chrome.contextMenus.create(contextMenuItemParent);
+//chrome.contextMenus.create(contextMenuOpenInNewTabInMightyParent)
