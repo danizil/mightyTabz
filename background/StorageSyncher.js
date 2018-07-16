@@ -62,35 +62,6 @@ class StorageSyncher{
                 
                 StorageSyncher.turnTitleMightyListIntoMightiesList(gotten.mightiesTitles)
               
-              
-              
-              
-                /*
-                for(let mighty in gotten.mightiesTitles){
-                    //make context menu item
-                    chrome.contextMenus.create({
-                        "id" : mighty,
-                        "title" : mighty,
-                        "parentId": "addToMighty",
-                        "contexts": ["all"]
-                        })
-                    chrome.contextMenus.onClicked.addListener(function(clickData, tab){
-                        MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id); 
-                        });
-                    
-                    
-                    
-                    for(let i in gotten.mightiesTitles[mighty].tabIdsList){
-                        chrome.tabs.query({title: gotten.mightiesTitles[mighty].tabIdsList[i]}, function(tabs){
-                            MightyHandlerBackground.mighties[mighty].tabIdsList.push(tabs[0].id)
-                            MightyHandlerBackground.backupMighties[mighty].tabIdsList.push(tabs[0].id)
-                        })
-                    }
-                
-                        
-                }
-
-                */
             }
 
         })
@@ -103,16 +74,20 @@ class StorageSyncher{
         for(let mighty in mightiesTitles){
             MightyHandlerBackground.mighties[mighty] = new MightyTab(mighty)
             //make context menu item
-            chrome.contextMenus.create({
-                "id" : mighty,
-                "title" : mighty,
-                "parentId": "addToMighty",
-                "contexts": ["all"]
-                })
-            chrome.contextMenus.onClicked.addListener(function(clickData, tab){
-                MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id); 
-                });
-            if(mighty == "jupyter"){console.log("the tab ids list for jupyter:\n" + mightiesTitles[mighty].tabIdsList)}
+            
+            ContextMenusHandler.addItemToParent(mighty, mighty, "addToMighty")
+            ContextMenusHandler.addItemToParent(mighty + "inNewTab", mighty, "newTabInMighty")
+            // chrome.contextMenus.create({
+            //     "id" : mighty,
+            //     "title" : mighty,
+            //     "parentId": "addToMighty",
+            //     "contexts": ["all"]
+            //     })
+            // chrome.contextMenus.onClicked.addListener(function(clickData, tab){
+            //     // the uniqueness of the menu item is its title
+            //     MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id); 
+            //     });
+            // if(mighty == "jupyter"){console.log("the tab ids list for jupyter:\n" + mightiesTitles[mighty].tabIdsList)}
             
             if(mightiesTitles[mighty].tabIdsList != []){
                 for(let i in mightiesTitles[mighty].tabIdsList){

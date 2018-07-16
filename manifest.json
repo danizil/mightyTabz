@@ -30,7 +30,7 @@
   	"background": {  
 		"scripts" : ["background/miscFunctions.js",
 					"background/listeners.js", 
-					 "background/contextMenus.js", 
+					 "background/contextMenusHandler.js", 
 					 "background/MightyHandler.js", 
 					 "background/MightyTab.js",
 					 "background/WindowHandler.js",

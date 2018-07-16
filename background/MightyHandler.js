@@ -8,15 +8,20 @@ class MightyHandlerBackground{
         
         MightyHandlerBackground.mighties[name] = new MightyTab(name);
         //make context menu item
-        chrome.contextMenus.create({
-            "id" : name,
-            "title" : name,
-            "parentId": "addToMighty",
-            "contexts": ["all"]
-        })
+        
+        ContextMenusHandler.addItemToParent(name, name, "addToMighty")
+        ContextMenusHandler.addItemToParent(name + "inNewTab", name, "newTabInMighty")
+        // chrome.contextMenus.create({
+        //     "id" : name,
+        //     "title" : name,
+        //     "parentId": "addToMighty",
+        //     "contexts": ["all"]
+        // })
         chrome.contextMenus.onClicked.addListener(function(clickData, tab){
             MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id); 
         });
+
+
         StorageSyncher.sync();
         
     
@@ -33,7 +38,17 @@ class MightyHandlerBackground{
         chrome.contextMenus.remove(name)
         StorageSyncher.sync();
     }
-  
+    
+    static findMightiesForTab(tabId){
+        mightiesList = []
+        for(let mighty in MightyHandlerBackground.mighties){
+            if(MightyHandlerBackground.mighties[mighty].tabIdsList.indexOf(tabId) != -1){
+                mightiesList.append(mighty)
+            }
+        }
+        console.log("49mightyhandler mightyList" + mightiesList)
+    }
+
     static collectMightyless(){
         chrome.tabs.query({}, function(tabs){
             let tabsInMighties = []

@@ -158,6 +158,7 @@ chrome.webNavigation.onTabReplaced.addListener(function(details){
 	for(let mighty in MightyHandlerBackground.mighties){
 		let indexOfTab = MightyHandlerBackground.mighties[mighty].tabIdsList.indexOf(oldId)
 		if(indexOfTab > -1){
+			console.log("the tab with id: " + JSON.stringify(MightyHandlerBackground.mighties[mighty].tabIdsList[indexOfTab]+ " in mighty" + mighty) )
 			MightyHandlerBackground.mighties[mighty].tabIdsList[indexOfTab] = newId
 		}
 		console.log("the new mighties in handler: \n" + JSON.stringify(MightyHandlerBackground.mighties))
