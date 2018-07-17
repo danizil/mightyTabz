@@ -57,7 +57,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 		if(MightyHandlerBackground.mighties){
 			for(let mighty in MightyHandlerBackground.mighties){
 			
-				mightyNameList[i] = mighty;
+				mightyNameList[i] = [mighty, MightyHandlerBackground.mighties[mighty].tabIdsList.length];
 				
 				i++; 
 			}
@@ -137,19 +137,10 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeWithoutWindow){
 		}
 	}
 })
-/*
-chrome.tabs.onCreated.addListener(function(tab){
-	console.log("opener tab id:\n" + tab.openerTabId)
-	if(tab.openerTabId){
-		for(mighty in MightyHandlerBackground.mighties){
-			if(MightyHandlerBackground.mighties[mighty].tabIdsList.indexOf(tab.openerTabId) > -1){
-				MightyHandlerBackground.mighties[mighty].tabIdsList.push(tab.id)
-				console.log(JSON.stringify(MightyHandlerBackground.mighties))
-			}
-		}
-	}
+
+chrome.tabs.onUpdated.addListener(function(tab){
+	StorageSyncher.sync()
 })
-*/
 
 chrome.webNavigation.onTabReplaced.addListener(function(details){
 	let oldId = details.replacedTabId

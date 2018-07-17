@@ -24,9 +24,12 @@ function sendMessageToRestoreMighties(){
 //makes all tabs of the specific mighty appear at the same place
 function sendMessageToGatherMighty(){
     var theHtmlInsideTheListItem = this.innerHTML
-    chrome.runtime.sendMessage({request: "gatherMighty", mighty: theHtmlInsideTheListItem}, function(response){
+    let indexOfTilda = theHtmlInsideTheListItem.indexOf("~")
+    let mightyName = theHtmlInsideTheListItem.slice(0, indexOfTilda)
+    chrome.runtime.sendMessage({request: "gatherMighty", mighty: mightyName}, function(response){
         if(response.request == "mighties gathered"){
-            MightyManager.changeCurr(theHtmlInsideTheListItem)
+            let mightyName = theHtmlInsideTheListItem.slice(0, theHtmlInsideTheListItem.indexOf("~"))
+            MightyManager.changeCurr(mightyName)
             
         }
     })

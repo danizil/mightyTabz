@@ -8,6 +8,15 @@
 chrome.contextMenus.create(contextMenuItemParent);
 
 
+// dont try to create to parents. it wont allow it and 
+//they will just be pushed to be children of the one and only parent
+// var secondParent = {
+// 	"id": "mightyTabz2",
+// 	"title": "WhelhtyTabbers!",
+// 	"contexts": ["all"]
+	
+// };
+// chrome.contextMenus.create(secondParent)
 
 var contextMenuAddToMighty = {
 	"id": "addToMighty",
@@ -48,6 +57,12 @@ chrome.contextMenus.onClicked.addListener(function(clickData, tab){
 		})
 	}
 
+	else if(clickData.menuItemId == "removeFromMighty"){
+		mightiesListForThisTab = MightyHandlerBackground.findMightiesForTab(tab.id)
+		for(let i in mightiesListForThisTab){
+			ContextMenusHandler.addItemToParent(mightiesListForThisTab[i] + "toRemove", mightiesListForThisTab[i], "removeFromMighty")
+		}
+	}
 });
 
 //context menus appear in the following files: 

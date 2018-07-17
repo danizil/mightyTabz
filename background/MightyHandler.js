@@ -40,13 +40,13 @@ class MightyHandlerBackground{
     }
     
     static findMightiesForTab(tabId){
-        mightiesList = []
+        let mightiesList = []
         for(let mighty in MightyHandlerBackground.mighties){
             if(MightyHandlerBackground.mighties[mighty].tabIdsList.indexOf(tabId) != -1){
-                mightiesList.append(mighty)
+                mightiesList.push(mighty)
             }
         }
-        console.log("49mightyhandler mightyList" + mightiesList)
+        return mightiesList
     }
 
     static collectMightyless(){

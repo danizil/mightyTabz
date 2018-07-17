@@ -27,18 +27,19 @@ reveiveListItem.addEventListener('click', sendMessageToRestoreMighties)
 document.addEventListener('DOMContentLoaded', function(){
     chrome.runtime.sendMessage({message: "what mighties are there"},function(response){
         if(response.mighties){
-            mightiesStringArr = response.mighties;
+            mightiesStringNumTabsArr = response.mighties;
             MightyManager.currMighty = response.current;
-            var l = mightiesStringArr.length;
+            var l = mightiesStringNumTabsArr.length;
             var list = document.getElementById("listOfMighties") 
 
             for(var i = 0; i < l ; i++ ){
                 var listItem = document.createElement("li");
-                listItem.id = mightiesStringArr[i];
+                listItem.id = mightiesStringNumTabsArr[i][0];
 
                 var writtenPart = document.createElement("p")
-                writtenPart.id = mightiesStringArr[i] + "Written"
-                writtenPart.innerHTML = mightiesStringArr[i];
+                writtenPart.id = mightiesStringNumTabsArr[i][0] + "Written"
+                console.log(writtenPart.id)
+                writtenPart.innerHTML = mightiesStringNumTabsArr[i][0] + "~" + mightiesStringNumTabsArr[i][1];
                 writtenPart.addEventListener('click', sendMessageToGatherMighty);
                 listItem.appendChild(writtenPart);
                 
@@ -46,7 +47,9 @@ document.addEventListener('DOMContentLoaded', function(){
                 //list.appendChild(listItem);
                 
                 list.insertBefore(listItem, list.childNodes[0]);
-                if(writtenPart.innerHTML == MightyManager.currMighty){
+                let mightyName = writtenPart.innerHTML.slice(0, writtenPart.innerHTML.indexOf("~"))
+                console.log("currmighty" + MightyManager.currMighty)
+                if(mightyName == MightyManager.currMighty){
                     writtenPart.style.color = "red";
                 }
                
