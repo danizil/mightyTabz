@@ -35,7 +35,8 @@ class MightyHandlerBackground{
             delete mightyToDestroy.tabIdsList[index]
         }
         delete MightyHandlerBackground.mighties[name]
-        chrome.contextMenus.remove(name)
+        ContextMenusHandler.removeItem(name)
+        ContextMenusHandler.removeItem(name + "inNewTab")
         StorageSyncher.sync();
     }
     
