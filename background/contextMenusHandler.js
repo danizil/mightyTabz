@@ -1,6 +1,6 @@
  ///<reference path="C:\Users\User\Documents\לימודים\comps\chrome_extensions\mightyTab\mightyTab\chrome-api-vsdoc.js"/>
  var contextMenuItemParent = {
-	"id": "mightyTabz",
+	"id": "migthy tabs uber parent",
 	"title": "Whelcome MightyTabbers!",
 	"contexts": ["all"]
 	
@@ -21,7 +21,7 @@ chrome.contextMenus.create(contextMenuItemParent);
 var contextMenuAddToMighty = {
 	"id": "addToMighty",
 	"title": "Add Current to Mighty",
-	"parentId" : "mightyTabz",
+	"parentId" : "migthy tabs uber parent",
 	"contexts": ["all"]
 }
 chrome.contextMenus.create(contextMenuAddToMighty)
@@ -29,7 +29,7 @@ chrome.contextMenus.create(contextMenuAddToMighty)
 var contextMenuRemoveFromMighty = {
 	"id": "removeFromMighty",
 	"title": "Remove from Mighty",
-	"parentId" : "mightyTabz",
+	"parentId" : "migthy tabs uber parent",
 	"contexts": ["all"]
 }
 chrome.contextMenus.create(contextMenuRemoveFromMighty)
@@ -37,7 +37,7 @@ chrome.contextMenus.create(contextMenuRemoveFromMighty)
 var contextMenuOpenNewTabInMighty = {
 	"id": "newTabInMighty",
 	"title": "New Tab In Mighty:",
-	"parentId" : "mightyTabz",
+	"parentId" : "migthy tabs uber parent",
 	"contexts": ["all"]
 }
 chrome.contextMenus.create(contextMenuOpenNewTabInMighty)
@@ -45,7 +45,7 @@ chrome.contextMenus.create(contextMenuOpenNewTabInMighty)
 chrome.contextMenus.onClicked.addListener(function(clickData, tab){
 	// the uniqueness of the menu item is its title
 	if(clickData.parentMenuItemId == "addToMighty"){
-		MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id); 
+	MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id); 
 	}
 
 	else if(clickData.parentMenuItemId == "newTabInMighty"){
@@ -77,7 +77,6 @@ class ContextMenusHandler{
 			"parentId" : parent,
 			"contexts": ["all"]
 		}
-		
 		chrome.contextMenus.create(contextMenuItem)
 	}
 	static removeItem(name){	

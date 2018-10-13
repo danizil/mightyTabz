@@ -81,7 +81,9 @@ class StorageSyncher{
                 for(let i in mightiesTitles[mighty].tabIdsList){
                     console.log("in turn titles into ids in the second loop\n" + JSON.stringify(mightiesTitles[mighty].tabIdsList[i]))
                     chrome.tabs.query({title: mightiesTitles[mighty].tabIdsList[i]}, function(tabs){
-                        MightyHandlerBackground.mighties[mighty].tabIdsList.push(tabs[0].id)
+                        if(MightyHandlerBackground.mighties[mighty].tabIdsList.indexOf(tabs[0].id) <= -1){
+                            MightyHandlerBackground.mighties[mighty].tabIdsList.push(tabs[0].id)
+                        }
                     })
                 }
             }
