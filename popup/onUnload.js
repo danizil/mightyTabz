@@ -53,18 +53,30 @@ document.addEventListener('DOMContentLoaded', function(){
                     writtenPart.style.color = "red";
                 }
                
+                
+
+                // these are the associated buttons to each mighty
                 var removeButton = document.createElement("button");
                 removeButton.innerHTML = "Remove";
                 removeButton.addEventListener("click", sendMessageToRemoveMighty)
-                //define the function remove mighty
                 listItem.appendChild(removeButton)
-                /*
+                // V
+                
+                
                 var addButton = document.createElement("button");
                 addButton.innerHTML = "Add Current";
-                addButton.addEventListener("click", sendMessageToGatherMighty)
-                //define the function remove mighty
-                listItem.appendChild(removeButton)
-                */
+                addButton.addEventListener("click", sendMessageToAddToMighty)
+                listItem.appendChild(addButton)
+                
+                var newTabInMightyButton = document.createElement("button");
+                addButton.innerHTML = "New Tab";
+                addButton.addEventListener("click", sendMessageToOpenNewTab)
+                listItem.appendChild(newTabInMightyButton)
+
+                var removeCurrentButton = document.createElement("button");
+                addButton.innerHTML = "remove curr";
+                addButton.addEventListener("click", sendMessageToRemoveTab)
+                listItem.appendChild(removeCurrentButton)
             }
             
         }

@@ -93,19 +93,49 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 //removes mighty from mighty list
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	if (request.request == "remove"){
+	if (request.request == "remove mighty"){
 		MightyHandlerBackground.destroyMighty(request.toRemove)
 		sendResponse({backGroundToPopup: "finished"})
 		}
 })
 
-/*maybe add a way to automatically add to mighty? not sure how to make it comfortable...
-chrome.tabs.onCreated.addListener(function(created){
-	console.log(created.openerTabId)
+
+		// The listeners for the current window options
+
+// Listener for current page action
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+	if(request.current){
+		chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs){
+			switch(request.request){
+			case 'add current':
+				MightyHandlerBackground.mighties[request.toBeAdeedTo].addTab(tabs[0].id)
+				sendResponse({added: true})
+				StorageSyncher.sync()
+				break	
+			case 'remove current from mighty':
+				nameToRemoveFrom = request.nameToRemoveTabFrom
+				// If the current tab's id is in the mighty with the name sent
+				if (MightyHandlerBackground.mighties[nameToRemoveFrom].tabIdsList.indexOf(tabs[0].id) != -1){
+					MightyHandlerBackground.mighties[nameToRemoveFrom].removeTab(tabs[0].id)
+					sendResponse({currInMighty: true})
+				}
+				else{
+					sendResponse({currInMighty: false})
+				}
+					
+			}
+			
+		})
+	}
 })
-*/
 
-
+// listener for opening new tab in mighty
+chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){
+	if(request.request == 'open new in mighty'){
+		mightyName = request.nameToOpenNewTabIn
+		MightyHandlerBackground.mighties[mightyName].newTabInMighty()
+	}
+})
 
 //tab removal, removes tab from mighty. this is shitty and will be changed
 

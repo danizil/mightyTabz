@@ -35,14 +35,45 @@ function sendMessageToGatherMighty(){
     })
 }
 
-//when remove button is closed 
+//the function of the remove mighty button 
 function sendMessageToRemoveMighty(){
     var nameToRemove = this.parentElement.id;
-    chrome.runtime.sendMessage({request: "remove", toRemove: nameToRemove},function(response){
+    chrome.runtime.sendMessage({request: "remove mighty", toRemove: nameToRemove},function(response){
         var listItemToRemove = document.getElementById(nameToRemove);
         document.getElementById("listOfMighties").removeChild(listItemToRemove);
     })
 }
+
+            // The functions concearning the current tab's state
+
+// sends a message to add current to mighty
+function sendMessageToAddToMighty(){
+    let nameToAddCurrentTo = this.parentElement.id
+    console.log((nameToAddCurrentTo))
+    chrome.runtime.sendMessage({current: true, request: "add current", toBeAdeedTo: nameToAddCurrentTo}, function(response){
+        // ---TODO---: raise the number next to the tab
+    })
+}
+
+// sends a message to open a new tab in this mighty
+function sendMessageToOpenNewTab(){
+    let nameToOpenNewTabIn = this.parentElement.id
+    chrome.runtime.sendMessage({request: "open new in mighty", nameToOpenNewTabIn: nameToOpenNewTabIn}, function(response){
+        // --TODO--: raise the number next to the tab
+    })
+}
+
+function sendMessageToRemoveCurrFromMighty(){
+    let nameToRemoveTabFrom = this.parentElement.id
+    chrome.runtime.sendMessage({current: true, request: "remove current from mighty", nameToRemoveTabFrom: nameToRemoveTabFrom},
+        function(response){
+            if(response.currInMighty){
+                console.log("the current page is in mighty. find how to lower the")
+            }
+        // Todo: lower the number of tabs if the response is positive
+        })
+} 
+
 
 //sends a message with the user's input to become the name of a new mighty tab
 function sendInputToBackground(){

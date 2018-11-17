@@ -49,12 +49,9 @@ chrome.contextMenus.onClicked.addListener(function(clickData, tab){
 	}
 
 	else if(clickData.parentMenuItemId == "newTabInMighty"){
-		chrome.tabs.create({} , function(newlyOpenedTab){
-			mightyNameWithEnding = clickData.menuItemId
-			mightyName = mightyNameWithEnding.slice(0, mightyNameWithEnding.length - 8)
-			console.log(mightyName)
-			MightyHandlerBackground.mighties[mightyName].addTab(newlyOpenedTab.id)
-		})
+		mightyNameWithEnding = clickData.menuItemId
+		mightyName = mightyNameWithEnding.slice(0, mightyNameWithEnding.length - 8)
+		MightyHandlerBackground.mighties[mightyName].newTabInMighty()
 	}
 
 	else if(clickData.menuItemId == "removeFromMighty"){

@@ -22,6 +22,13 @@ class MightyTab {  //make members private
 		}
 	}
 
+	newTabInMighty(){
+		// This opens a new tab in this mighty
+		chrome.tabs.create({} , function(newlyOpenedTab){
+			this.addTab(newlyOpenedTab.id)
+		})
+	}
+
 	removeTab(tabId){
 		if(this.tabIdsList.indexOf(tabId) > -1){
 			var indexToRemove = this.tabIdsList.indexOf(tabId);
