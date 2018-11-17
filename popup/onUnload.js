@@ -50,22 +50,15 @@ document.addEventListener('DOMContentLoaded', function(){
                 if(mightyName == MightyManager.currMighty){
                     writtenPart.style.color = "red";
                 }
-               
                 
-
                 // these are the associated buttons to each mighty
-                var removeButton = document.createElement("button");
-                removeButton.innerHTML = "Remove";
-                removeButton.addEventListener("click", sendMessageToRemoveMighty)
-                listItem.appendChild(removeButton)
-                // V
-                
                 
                 var addButton = document.createElement("button");
                 addButton.innerHTML = "AC";
                 addButton.addEventListener("click", sendMessageToAddToMighty)
                 listItem.appendChild(addButton)
-                
+                // all good just need to make the number change
+
                 var newTabInMightyButton = document.createElement("button");
                 newTabInMightyButton.innerHTML = "NT";
                 newTabInMightyButton.addEventListener("click", sendMessageToOpenNewTab)
@@ -75,6 +68,13 @@ document.addEventListener('DOMContentLoaded', function(){
                 removeCurrentButton.innerHTML = "RC";
                 removeCurrentButton.addEventListener("click", sendMessageToRemoveCurrFromMighty)
                 listItem.appendChild(removeCurrentButton)
+                // all good just need to make the number change
+                
+                var removeButton = document.createElement("button");
+                removeButton.innerHTML = "Remove";
+                removeButton.addEventListener("click", sendMessageToRemoveMighty)
+                listItem.appendChild(removeButton)
+                
             }
             
         }
