@@ -108,24 +108,28 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 		chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs){
 			switch(request.request){
 			case 'add current':
+				console.log("in case add current")
 				MightyHandlerBackground.mighties[request.toBeAdeedTo].addTab(tabs[0].id)
-				sendResponse({added: true})
-				StorageSyncher.sync()
+				responseToBeSent = {added: true}
 				break	
 			case 'remove current from mighty':
+				console.log("in case remove current")
 				nameToRemoveFrom = request.nameToRemoveTabFrom
 				// If the current tab's id is in the mighty with the name sent
 				if (MightyHandlerBackground.mighties[nameToRemoveFrom].tabIdsList.indexOf(tabs[0].id) != -1){
 					MightyHandlerBackground.mighties[nameToRemoveFrom].removeTab(tabs[0].id)
-					sendResponse({currInMighty: true})
+					responseToBeSent = {currInMighty: true}
 				}
 				else{
-					sendResponse({currInMighty: false})
+					responseToBeSent = {currInMighty: false}
 				}
-					
+				break	
 			}
-			
+			console.log("response to be seent current tab\n", responseToBeSent)
+			sendResponse(responseToBeSent)
+				
 		})
+		sendResponse({response: "peins of donkey"})
 	}
 })
 

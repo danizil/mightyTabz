@@ -22,8 +22,6 @@ var reveiveListItem = document.getElementById("revive after crash")
 reveiveListItem.innerHTML = "Revive After crash"
 reveiveListItem.addEventListener('click', sendMessageToRestoreMighties)
 
-
-
 document.addEventListener('DOMContentLoaded', function(){
     chrome.runtime.sendMessage({message: "what mighties are there"},function(response){
         if(response.mighties){
@@ -64,18 +62,18 @@ document.addEventListener('DOMContentLoaded', function(){
                 
                 
                 var addButton = document.createElement("button");
-                addButton.innerHTML = "Add Current";
+                addButton.innerHTML = "AC";
                 addButton.addEventListener("click", sendMessageToAddToMighty)
                 listItem.appendChild(addButton)
                 
                 var newTabInMightyButton = document.createElement("button");
-                addButton.innerHTML = "New Tab";
-                addButton.addEventListener("click", sendMessageToOpenNewTab)
+                newTabInMightyButton.innerHTML = "NT";
+                newTabInMightyButton.addEventListener("click", sendMessageToOpenNewTab)
                 listItem.appendChild(newTabInMightyButton)
 
                 var removeCurrentButton = document.createElement("button");
-                addButton.innerHTML = "remove curr";
-                addButton.addEventListener("click", sendMessageToRemoveTab)
+                removeCurrentButton.innerHTML = "RC";
+                removeCurrentButton.addEventListener("click", sendMessageToRemoveCurrFromMighty)
                 listItem.appendChild(removeCurrentButton)
             }
             

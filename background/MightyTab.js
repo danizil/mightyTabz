@@ -24,8 +24,11 @@ class MightyTab {  //make members private
 
 	newTabInMighty(){
 		// This opens a new tab in this mighty
+		let thisMighty = this
 		chrome.tabs.create({} , function(newlyOpenedTab){
-			this.addTab(newlyOpenedTab.id)
+			console.log("tab id ", newlyOpenedTab.id)
+			console.log("tab id list \n", thisMighty.tabIdsList)
+			thisMighty.addTab(newlyOpenedTab.id)
 		})
 	}
 

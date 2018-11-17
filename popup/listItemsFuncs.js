@@ -39,6 +39,7 @@ function sendMessageToGatherMighty(){
 function sendMessageToRemoveMighty(){
     var nameToRemove = this.parentElement.id;
     chrome.runtime.sendMessage({request: "remove mighty", toRemove: nameToRemove},function(response){
+        console.log("response to removal",response)
         var listItemToRemove = document.getElementById(nameToRemove);
         document.getElementById("listOfMighties").removeChild(listItemToRemove);
     })
@@ -52,6 +53,13 @@ function sendMessageToAddToMighty(){
     console.log((nameToAddCurrentTo))
     chrome.runtime.sendMessage({current: true, request: "add current", toBeAdeedTo: nameToAddCurrentTo}, function(response){
         // ---TODO---: raise the number next to the tab
+        console.log("response\n", response)
+        if(response.added == true){
+            let mightyDisplay = document.getElementById(nameToAddCurrentTo + 'Written')
+            oldNumber = int(mightyDisplay.innerHTML[mightyDisplay.innerHTML.length-1])
+            console.log("old number: ", oldNumber)
+            
+        }
     })
 }
 
