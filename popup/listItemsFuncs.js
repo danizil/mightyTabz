@@ -54,9 +54,11 @@ function sendMessageToAddToMighty(){
     chrome.runtime.sendMessage({current: true, request: "add current", toBeAdeedTo: nameToAddCurrentTo}, function(response){
         // ---TODO---: raise the number next to the tab
         console.log("response\n", response)
+        unloadPopup()
         if(response.added == true){
             let mightyDisplay = document.getElementById(nameToAddCurrentTo + 'Written')
-            oldNumber = int(mightyDisplay.innerHTML[mightyDisplay.innerHTML.length-1])
+            oldNumber = mightyDisplay.innerHTML[mightyDisplay.innerHTML.length-1]
+            mightyDisplay.innerHTML[mightyDisplay.innerHTML.length-1]
             console.log("old number: ", oldNumber)
             
         }
@@ -67,7 +69,7 @@ function sendMessageToAddToMighty(){
 function sendMessageToOpenNewTab(){
     let nameToOpenNewTabIn = this.parentElement.id
     chrome.runtime.sendMessage({request: "open new in mighty", nameToOpenNewTabIn: nameToOpenNewTabIn}, function(response){
-        // --TODO--: raise the number next to the tab
+        // no need to raise the number because the pupup closes
     })
 }
 
@@ -75,6 +77,7 @@ function sendMessageToRemoveCurrFromMighty(){
     let nameToRemoveTabFrom = this.parentElement.id
     chrome.runtime.sendMessage({current: true, request: "remove current from mighty", nameToRemoveTabFrom: nameToRemoveTabFrom},
         function(response){
+            unloadPopup()
             if(response.currInMighty){
                 console.log("the current page is in mighty. find how to lower the")
             }

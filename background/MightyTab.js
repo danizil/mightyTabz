@@ -48,27 +48,27 @@ class MightyTab {  //make members private
 		var amountOfTabsInMighty = this.tabIdsList.length;
 		var theNameOfTheMighty = this.name
 		var listOfTabsInMighty = this.tabIdsList
-		if(theNameOfTheMighty != MightyHandlerBackground.currentMighty){//this is problematic because if you change the moghty you need to switch
-			chrome.tabs.query({},function(tabs2){
-				
-				for(var tab in tabs2){
-					var indexOfIdInTabIdList = listOfTabsInMighty.find(function(id){
-						return id == tabs2[tab].id;
-						})		
-					if(indexOfIdInTabIdList)//works fine with the callback return and all
-						{//its supposed to release only the pinned mighty members
-						if(tabs2[tab].pinned){
+		
+		chrome.tabs.query({},function(tabs2){
+			
+			for(var tab in tabs2){
+				var indexOfIdInTabIdList = listOfTabsInMighty.find(function(id){
+					return id == tabs2[tab].id;
+					})		
+				if(indexOfIdInTabIdList)//works fine with the callback return and all
+					{//its supposed to release only the pinned mighty members
+					if(tabs2[tab].pinned){
 
-							chrome.tabs.update(tabs2[tab].id, {pinned: false});
-						}
-					}
-					else if(!tabs2[tab].pinned){//pin released not members
-
-						chrome.tabs.update(tabs2[tab].id, {pinned: true});
+						chrome.tabs.update(tabs2[tab].id, {pinned: false});
 					}
 				}
-			})
-		}
+				else if(!tabs2[tab].pinned){//pin released not members
+
+					chrome.tabs.update(tabs2[tab].id, {pinned: true});
+				}
+			}
+		})
+	
 		
 	}
 	

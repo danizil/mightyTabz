@@ -13,4 +13,5 @@ class MightyManager{
     }
 
 }
+MightyManager.mightiesNumTabsArr = [];
 MightyManager.currMighty = '';

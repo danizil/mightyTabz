@@ -129,7 +129,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 			sendResponse(responseToBeSent)
 				
 		})
-		sendResponse({response: "peins of donkey"})
+		// sendResponse({response: "peins of donkey"})
+	
 	}
 })
 
