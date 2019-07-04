@@ -34,7 +34,7 @@ function sendMessageToGatherMighty(){
         }
     })
 }
-
+// TODO: make this into highlighted thing
 //the function of the remove mighty button 
 function sendMessageToRemoveMighty(){
     var nameToRemove = this.parentElement.id;
@@ -47,11 +47,12 @@ function sendMessageToRemoveMighty(){
 
             // The functions concearning the current tab's state
 
-// sends a message to add current to mighty
+//!!!!!!!!!!!!!!!!!DEPRECATED!!!!!!!!!!!!!!!!
 function sendMessageToAddToMighty(){
     let nameToAddCurrentTo = this.parentElement.id
     console.log((nameToAddCurrentTo))
-    chrome.runtime.sendMessage({current: true, request: "add current", toBeAdeedTo: nameToAddCurrentTo}, function(response){
+    chrome.runtime.sendMessage({current: true, request: "add current", toBeAdeedTo: nameToAddCurrentTo},function(response){
+        // chrome.runtime.sendMessage({current: true, request: "add highlighted", toBeAdeedTo: nameToAddCurrentTo},function(response){
         // ---TODO---: raise the number next to the tab
         console.log("response\n", response)
         unloadPopup()
@@ -65,6 +66,35 @@ function sendMessageToAddToMighty(){
     })
 }
 
+// add all highlighted tabs to the current mighty (this includes adding the current because its the only one highlighted)
+
+// sends a message to add current to mighty
+function sendMessageToAddHIghlightedToMighty(){
+    let nameToAddCurrentTo = this.parentElement.id
+    console.log((nameToAddCurrentTo))
+    chrome.runtime.sendMessage({current: true, request: "add highlighted", toBeAdeedTo: nameToAddCurrentTo},function(response){
+        // ---TODO---: raise the number next to the tab
+        // console.log("response\n", response)
+        unloadPopup()
+        // this raises the number next to the text (tries to at least)
+        if(response.added == true){
+            let mightyDisplay = document.getElementById(nameToAddCurrentTo + 'Written')
+            indexOfNumber = mightyDisplay.innerHTML.indexOf('~') + 1
+            newNumber = response.newLength
+            caption = mightyDisplay.innerHTML.slice(0, indexOfNumber)
+            newInner = caption.concat(newNumber)
+            console.log("new number and capion: ", newInner)
+            mightyDisplay.innerHTML = newInner
+        
+            
+            
+        }
+    })
+}
+
+
+
+
 // sends a message to open a new tab in this mighty
 function sendMessageToOpenNewTab(){
     let nameToOpenNewTabIn = this.parentElement.id
@@ -73,6 +103,8 @@ function sendMessageToOpenNewTab(){
     })
 }
 
+
+// this will soon be DEPRECATED in favor of removing the highlighted
 function sendMessageToRemoveCurrFromMighty(){
     let nameToRemoveTabFrom = this.parentElement.id
     chrome.runtime.sendMessage({current: true, request: "remove current from mighty", nameToRemoveTabFrom: nameToRemoveTabFrom},
@@ -81,6 +113,25 @@ function sendMessageToRemoveCurrFromMighty(){
             if(response.currInMighty){
                 console.log("the current page is in mighty. find how to lower the")
             }
+        // Todo: lower the number of tabs if the response is positive
+        })
+} 
+
+
+function sendMessageToRemoveHighlightedFromMighty(){
+    let nameToRemoveTabsFrom = this.parentElement.id
+    chrome.runtime.sendMessage({current: true, request: "remove highlighted from mighty", nameToRemoveTabsFrom: nameToRemoveTabsFrom},
+        function(response){
+            unloadPopup()
+            console.log('response removing ' + JSON.stringify(response))
+            let mightyDisplay = document.getElementById(nameToRemoveTabsFrom + 'Written')
+            indexOfNumber = mightyDisplay.innerHTML.indexOf('~') + 1
+            newNumber = response.newLength
+            caption = mightyDisplay.innerHTML.slice(0, indexOfNumber)
+            newInner = caption.concat(newNumber)
+            console.log("new number and capion: ", newInner)
+            mightyDisplay.innerHTML = newInner
+        
         // Todo: lower the number of tabs if the response is positive
         })
 } 

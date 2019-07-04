@@ -59,7 +59,8 @@ function unloadPopup(){
                     var addButton = document.createElement("button");
                     addButton.className = "add"
                     addButton.innerHTML = "+";
-                    addButton.addEventListener("click", sendMessageToAddToMighty)
+                    // addButton.addEventListener("click", sendMessageToAddToMighty)
+                    addButton.addEventListener("click", sendMessageToAddHIghlightedToMighty)
                     listItem.appendChild(addButton)
                     // all good just need to make the number change
 
@@ -72,7 +73,8 @@ function unloadPopup(){
                     var removeCurrentButton = document.createElement("button");
                     removeCurrentButton.className = "removecurrent";
                     removeCurrentButton.innerHTML = "-";
-                    removeCurrentButton.addEventListener("click", sendMessageToRemoveCurrFromMighty)
+                    removeCurrentButton.addEventListener("click", sendMessageToRemoveHighlightedFromMighty)
+                    // removeCurrentButton.addEventListener("click", sendMessageToRemoveCurrFromMighty)
                     listItem.appendChild(removeCurrentButton)
                     // all good just need to make the number change
                     

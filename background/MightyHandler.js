@@ -3,9 +3,9 @@ class MightyHandlerBackground{
 	//mighty arr saves the id of the first tab in each mighty
     static createMighty(name){
         if (name in MightyHandlerBackground.mighties){
-            return;
+            return;//add elert for te user understanding of the problem.
         }
-        
+
         MightyHandlerBackground.mighties[name] = new MightyTab(name);
         //make context menu item
         
@@ -23,7 +23,7 @@ class MightyHandlerBackground{
 
 
         StorageSyncher.sync();
-        
+    
     
     }
 
@@ -75,5 +75,9 @@ class MightyHandlerBackground{
 }
 MightyHandlerBackground.mighties = {}
 MightyHandlerBackground.backupMighties = {}
-MightyHandlerBackground.currentMighty = '';
+MightyHandlerBackground.currentMighty = ''
+chrome.tabs.query({highlighted : true}, function(tabs){
+    MightyHandlerBackground.highlightedTabs = [tabs[0].id]
+})
+  
 

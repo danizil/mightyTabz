@@ -102,7 +102,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 		// The listeners for the current window options
 
-// Listener for current page action
+// !!!!!DEPRECATED!!!!!Listener for current page action
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	if(request.current){
 		chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs){
@@ -133,6 +133,32 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	
 	}
 })
+
+//listener to add highlighted (also includes the current tab)
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+	console.log('request: ' + JSON.stringify(request))
+	if(request.current){
+		switch(request.request){
+		case 'add highlighted':
+			console.log('want to add highlighted')
+			MightyHandlerBackground.mighties[request.toBeAdeedTo].addTabList(MightyHandlerBackground.highlightedTabs)
+			responseToBeSent = {added : true, newLength : MightyHandlerBackground.mighties[request.toBeAdeedTo].tabIdsList.length}
+			break
+		case 'remove highlighted from mighty':
+			console.log("in case remove highlighted")
+			// If the current tab's id is in the mighty with the name sent
+			MightyHandlerBackground.mighties[request.nameToRemoveTabsFrom].removeTabList(MightyHandlerBackground.highlightedTabs)
+			responseToBeSent = {currInMighty: true, newLength : MightyHandlerBackground.mighties[request.nameToRemoveTabsFrom].tabIdsList.length}
+			console.log('response to be sent ' + JSON.stringify(responseToBeSent))
+			break
+		default:
+			responseToBeSent = {added : 'no valid option given'}
+		}
+		sendResponse(responseToBeSent)
+
+	}
+})
+
 
 // listener for opening new tab in mighty
 chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){
@@ -189,4 +215,10 @@ chrome.webNavigation.onTabReplaced.addListener(function(details){
 		}
 		console.log("the new mighties in handler: \n" + JSON.stringify(MightyHandlerBackground.mighties))
 	}
+})
+// can do this cleverer: run query in addTabList for highlighted and add them in the callback, instead of saving all highlighted. this will also make the listeners shorter 
+chrome.tabs.onHighlighted.addListener(function(highlighted){
+	// basically the mistake is with the computer interperting the highlighted object good luck
+	MightyHandlerBackground.highlightedTabs = highlighted.tabIds
+	console.log('highlighted tabs: ' + JSON.stringify(MightyHandlerBackground.highlightedTabs[0]))
 })
