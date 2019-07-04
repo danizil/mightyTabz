@@ -139,11 +139,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 		switch(request.request){
 		case 'add highlighted':
 			MightyHandlerBackground.mighties[request.toBeAdeedTo].addTabList(MightyHandlerBackground.highlightedTabs)
+			if(MightyHandlerBackground.currentMighty == request.toBeAdeedTo){
+				MightyHandlerBackground.mighties[MightyHandlerBackground.currentMighty].bringTogether()
+			}
 			responseToBeSent = {added : true, newLength : MightyHandlerBackground.mighties[request.toBeAdeedTo].tabIdsList.length}
 			break
 		case 'remove highlighted from mighty':
 			// If the current tab's id is in the mighty with the name sent
 			MightyHandlerBackground.mighties[request.nameToRemoveTabsFrom].removeTabList(MightyHandlerBackground.highlightedTabs)
+			if(MightyHandlerBackground.currentMighty == request.nameToRemoveTabsFrom){
+				MightyHandlerBackground.mighties[MightyHandlerBackground.currentMighty].bringTogether()
+			}
 			responseToBeSent = {currInMighty: true, newLength : MightyHandlerBackground.mighties[request.nameToRemoveTabsFrom].tabIdsList.length}
 			break
 		default:
