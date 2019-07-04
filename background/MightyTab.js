@@ -8,23 +8,25 @@ class MightyTab {  //make members private
 
 	addTabList(idList){
 		// this should replace addTab and is fit to handle the adding of individual tabs
-		console.log('this mightys tab id list ' + this.tabIdsList[0])
+		// console.log('this mightys tab id list ' + this.tabIdsList[0])
 		// console.log('idList at begining of add' + idList[0]) this works fine
 		if(typeof idList == 'number'){
 			console.log('the type to be added is a number')
 			idList = [idList]
 		}
-		let l = this.tabIdsList.length
+		let formerLength = this.tabIdsList.length
+		let l = formerLength
 		for(let id in idList){
-			console.log('id in id list ' + idList[id])
 			if(this.tabIdsList.indexOf(idList[id]) == -1 && idList[id] > 0){
 				this.tabIdsList[l] = idList[id]
 				l++	
 			}	
 		}
-		StorageSyncher.sync()
-		console.log('does the predefined l equal the length of the ids list after it has changed? l = '+ l +' tabIdsList.length = '+this.tabIdsList.length +
-		'\n if so, go to MightTab.removeTabList and make it sync storage only if lengths are different')	
+		if (formerLength != l){
+			StorageSyncher.sync()
+		}
+		// console.log('does the predefined l equal the length of the ids list after it has changed? formerlength = '+ formerlength +' tabIdsList.length = '+l +
+		// '\n if so, go to MightTab.removeTabList and make it sync storage only if lengths are different')	
 	}
 
 
@@ -68,19 +70,20 @@ class MightyTab {  //make members private
 		if(typeof idList == 'number'){
 			idList = [idList]
 		}
-		let l = this.tabIdsList.length
+		let formerLength = this.tabIdsList.length
+		let l = formerLength
 		for(let id in idList){
 			if(this.tabIdsList.indexOf(idList[id]) > -1){
 				var indexToRemove = this.tabIdsList.indexOf(idList[id]);
 				this.tabIdsList.splice(indexToRemove, 1);
-				
+				l--
 			}
 		}
-		StorageSyncher.sync()
-		console.log('does the predefined l equal the length of the ids list after it has changed? l = '+ l +' tabIdsList.length = '+this.tabIdsList.length  +
-		' \n if so, go to MightTab.removeTabList and make it sync storage only if lengths are different')
+		if(l != formerLength){
+			StorageSyncher.sync()
+	
+		}
 	}
-
 	
 	bringTogether(){
 		
