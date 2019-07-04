@@ -55,7 +55,7 @@ function sendMessageToAddToMighty(){
         // chrome.runtime.sendMessage({current: true, request: "add highlighted", toBeAdeedTo: nameToAddCurrentTo},function(response){
         // ---TODO---: raise the number next to the tab
         console.log("response\n", response)
-        unloadPopup()
+        // unloadPopup()
         if(response.added == true){
             let mightyDisplay = document.getElementById(nameToAddCurrentTo + 'Written')
             oldNumber = mightyDisplay.innerHTML[mightyDisplay.innerHTML.length-1]
@@ -75,7 +75,7 @@ function sendMessageToAddHIghlightedToMighty(){
     chrome.runtime.sendMessage({current: true, request: "add highlighted", toBeAdeedTo: nameToAddCurrentTo},function(response){
         // ---TODO---: raise the number next to the tab
         // console.log("response\n", response)
-        unloadPopup()
+        // unloadPopup()
         // this raises the number next to the text (tries to at least)
         if(response.added == true){
             let mightyDisplay = document.getElementById(nameToAddCurrentTo + 'Written')
@@ -109,7 +109,7 @@ function sendMessageToRemoveCurrFromMighty(){
     let nameToRemoveTabFrom = this.parentElement.id
     chrome.runtime.sendMessage({current: true, request: "remove current from mighty", nameToRemoveTabFrom: nameToRemoveTabFrom},
         function(response){
-            unloadPopup()
+            // unloadPopup()
             if(response.currInMighty){
                 console.log("the current page is in mighty. find how to lower the")
             }
@@ -122,7 +122,7 @@ function sendMessageToRemoveHighlightedFromMighty(){
     let nameToRemoveTabsFrom = this.parentElement.id
     chrome.runtime.sendMessage({current: true, request: "remove highlighted from mighty", nameToRemoveTabsFrom: nameToRemoveTabsFrom},
         function(response){
-            unloadPopup()
+            // unloadPopup()
             console.log('response removing ' + JSON.stringify(response))
             let mightyDisplay = document.getElementById(nameToRemoveTabsFrom + 'Written')
             indexOfNumber = mightyDisplay.innerHTML.indexOf('~') + 1
