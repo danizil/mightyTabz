@@ -4,20 +4,27 @@
 
 function sendMessageToUnpinAll(){
     chrome.runtime.sendMessage({request: "unpin all"}, function(response){
-        MightyManager.changeCurr('');
+        MightyManager.changeCurr('mightyless');
        
     })
 }
 
 function sendMessageToCollectMightyless(){
     chrome.runtime.sendMessage({request: "collect mightyless"}, function(response){
-        MightyManager.changeCurr('');
+        MightyManager.changeCurr('mightyless');
     })
 }
 
 function sendMessageToRestoreMighties(){
     chrome.runtime.sendMessage({request: "revive button pressed"}, function(response){
-        MightyManager.changeCurr('');
+        MightyManager.changeCurr('mightyless')
+        // console.log('revived mighties now getting response' + response)
+        if(response.restored){
+            mighties = response.mighties
+            for(let mighty in mighties){
+                MightyManager.changeNumberOnDisplay(mighty.name, mighty.tabIdsList.length)
+            }
+        }
     })
 }
     
@@ -73,21 +80,9 @@ function sendMessageToAddHIghlightedToMighty(){
     let nameToAddCurrentTo = this.parentElement.id
     console.log((nameToAddCurrentTo))
     chrome.runtime.sendMessage({current: true, request: "add highlighted", toBeAdeedTo: nameToAddCurrentTo},function(response){
-        // ---TODO---: raise the number next to the tab
-        // console.log("response\n", response)
-        // unloadPopup()
-        // this raises the number next to the text (tries to at least)
         if(response.added == true){
-            let mightyDisplay = document.getElementById(nameToAddCurrentTo + 'Written')
-            indexOfNumber = mightyDisplay.innerHTML.indexOf('~') + 1
-            newNumber = response.newLength
-            caption = mightyDisplay.innerHTML.slice(0, indexOfNumber)
-            newInner = caption.concat(newNumber)
-            console.log("new number and capion: ", newInner)
-            mightyDisplay.innerHTML = newInner
-        
-            
-            
+            MightyManager.changeNumberOnDisplay(nameToAddCurrentTo, response.newLength)
+
         }
     })
 }

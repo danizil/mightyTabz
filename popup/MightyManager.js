@@ -1,7 +1,7 @@
 class MightyManager{
 
     static changeCurr(newMighty){
-        if(MightyManager.currMighty != '' && MightyManager.currMighty != 'none'){
+        if(MightyManager.currMighty != 'mightyless' && MightyManager.currMighty != 'none'){
             document.getElementById(MightyManager.currMighty + "Written").style.color = "black"
         }
        
@@ -11,6 +11,16 @@ class MightyManager{
         }
         
     }
+    static changeNumberOnDisplay(name, newLength){
+        let mightyDisplay = document.getElementById(name + 'Written')
+        indexOfNumber = mightyDisplay.innerHTML.indexOf('~') + 1
+        newNumber = newLength
+        caption = mightyDisplay.innerHTML.slice(0, indexOfNumber)
+        newInner = caption.concat(newNumber)
+        console.log("new number and capion: ", newInner)
+        mightyDisplay.innerHTML = newInner
+    }
+
 
 }
 MightyManager.mightiesNumTabsArr = [];
