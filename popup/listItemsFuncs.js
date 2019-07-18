@@ -99,7 +99,7 @@ function sendMessageToAddHIghlightedToMighty(){
 function sendMessageToOpenNewTab(){
     let nameToOpenNewTabIn = this.parentElement.id
     chrome.runtime.sendMessage({request: "open new in mighty", nameToOpenNewTabIn: nameToOpenNewTabIn}, function(response){
-        // no need to raise the number because the pupup closes
+        // no need to raise the number because the pupup closes. unload popup doesnt work
     })
 }
 

@@ -11,12 +11,6 @@ class MightyHandlerBackground{
         
         ContextMenusHandler.addItemToParent(name, name, "addToMighty")
         ContextMenusHandler.addItemToParent(name + "inNewTab", name, "newTabInMighty")
-        // chrome.contextMenus.create({
-        //     "id" : name,
-        //     "title" : name,
-        //     "parentId": "addToMighty",
-        //     "contexts": ["all"]
-        // })
         chrome.contextMenus.onClicked.addListener(function(clickData, tab){
             MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id); 
         });
@@ -69,13 +63,14 @@ class MightyHandlerBackground{
             }
             let zombieMighty = new MightyTab("zombie", mightylessList)
             zombieMighty.bringTogether();
+            //maybe change the current mighty in mighty handler? yes yes i think its better
         })
     }
 		
 }
 MightyHandlerBackground.mighties = {}
 MightyHandlerBackground.backupMighties = {}
-MightyHandlerBackground.currentMighty = ''
+MightyHandlerBackground.currentMighty = 'mightyless'
 chrome.tabs.query({highlighted : true}, function(tabs){
     MightyHandlerBackground.highlightedTabs = [tabs[0].id]
 })

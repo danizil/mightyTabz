@@ -59,6 +59,7 @@ chrome.contextMenus.onClicked.addListener(function(clickData, tab){
 		for(let i in mightiesListForThisTab){
 			ContextMenusHandler.addItemToParent(mightiesListForThisTab[i] + "toRemove", mightiesListForThisTab[i], "removeFromMighty")
 		}
+		console.log("mighties list for this tab " + mightiesListForThisTab)
 	}
 });
 

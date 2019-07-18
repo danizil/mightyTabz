@@ -1,7 +1,7 @@
 class StorageSyncher{    
     static sync(){//can make tis kind for when moved only, for efficiency. for now will do this for all
         let mightiesTitles = {};
-        console.log("in the begining of sync, mighties are:\n" + JSON.stringify(MightyHandlerBackground.mighties))
+        // console.log("in the begining of sync, mighties are:\n" + JSON.stringify(MightyHandlerBackground.mighties))
         for(let mighty in MightyHandlerBackground.mighties){
             mightiesTitles[mighty] = new MightyTab(mighty)
         }

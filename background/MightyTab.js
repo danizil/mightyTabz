@@ -6,6 +6,20 @@ class MightyTab {  //make members private
 
 	}
 
+	addHighlighedTabs(){
+		// reason not to have this function: query will prevent us from sending back the number of tabs for the popup
+		// we could have another listener in the popup but that maybe would be jjust as bad as the listener for highlighted in the background
+		// although the popup is not always open....
+		chrome.tabs.query({highlighted : true}, function(tabs){	
+			for(let tabIdx in tabs){
+				id = tabs[tabIdx].id
+				if(this.tabIdsList.indexOf(id) == -1 && id > 0){
+
+				}
+			}
+		})
+	}
+	
 	addTabList(idList){
 		// this should replace addTab and is fit to handle the adding of individual tabs
 		// console.log('this mightys tab id list ' + this.tabIdsList[0])
@@ -23,6 +37,12 @@ class MightyTab {  //make members private
 			}	
 		}
 		if (formerLength != l){
+			if(MightyHandlerBackground.currentMighty == this.name){
+				this.bringTogether()
+			}
+			else if(MightyHandlerBackground.currentMighty == 'mightyless'){
+				MightyHandlerBackground.collectMightyless()
+			}
 			StorageSyncher.sync()
 		}
 		// console.log('does the predefined l equal the length of the ids list after it has changed? formerlength = '+ formerlength +' tabIdsList.length = '+l +
@@ -35,31 +55,39 @@ class MightyTab {  //make members private
 		var l = this.tabIdsList.length;
 		if(this.tabIdsList.indexOf(id) == -1 && id > 0){
 			this.tabIdsList[l] = id
-			MightyHandlerBackground.currentMighty = "none"
+			// MightyHandlerBackground.currentMighty = "none"
+			console.log('this ' + this)
+			if(MightyHandlerBackground.currentMighty == this.name){
+				this.bringTogether()
+			}
+			else if(MightyHandlerBackground.currentMighty == 'mightyless'){
+				MightyHandlerBackground.collectMightyless()
+			}
 			StorageSyncher.sync();
-		}
-		else{
-			if(this.tabIdsList.indexOf(id) != -1){
-			}
-			else if (id<=0){
-			}
 		}
 	}
 
 	newTabInMighty(){
 		// This opens a new tab in this mighty
-		let thisMighty = this
+		this.bringTogether()
 		chrome.tabs.create({} , function(newlyOpenedTab){
 			console.log("tab id ", newlyOpenedTab.id)
 			console.log("tab id list \n", thisMighty.tabIdsList)
-			thisMighty.addTab(newlyOpenedTab.id)
+			this.addTab(newlyOpenedTab.id)
 		})
 	}
 
 	removeTab(tabId){
+		// Soon to be DEPRECATED
 		if(this.tabIdsList.indexOf(tabId) > -1){
 			var indexToRemove = this.tabIdsList.indexOf(tabId);
 			this.tabIdsList.splice(indexToRemove, 1);
+			if(MightyHandlerBackground.currentMighty == this.name){
+				this.bringTogether()
+			}
+			else if(MightyHandlerBackground.currentMighty == 'mightyless'){
+				MightyHandlerBackground.collectMightyless()
+			}
 			StorageSyncher.sync()
 		}
 		
@@ -80,6 +108,12 @@ class MightyTab {  //make members private
 			}
 		}
 		if(l != formerLength){
+			if(MightyHandlerBackground.currentMighty == this){
+				this.bringTogether()
+			}
+			else if(MightyHandlerBackground.currentMighty == 'mightyless'){
+				MightyHandlerBackground.collectMightyless()
+			}
 			StorageSyncher.sync()
 	
 		}

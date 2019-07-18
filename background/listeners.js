@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	if(request.request == "collect mightyless"){
-		MightyHandlerBackground.currentMighty = ""
+		MightyHandlerBackground.currentMighty = "mightyless"
 		MightyHandlerBackground.collectMightyless()
 	}
 	
@@ -27,7 +27,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	if(request.request == "revive button pressed"){
 
-		MightyHandlerBackground.currentMighty = ""
+		MightyHandlerBackground.currentMighty = "mightyless"
 		for(mighty in MightyHandlerBackground.mighties){
 			console.log("after pressing revive in for loop mighty in backround mighty handler\n" + JSON.stringify(MightyHandlerBackground.mighties[mighty]))
 			MightyHandlerBackground.destroyMighty(mighty)
@@ -110,7 +110,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 			case 'add current':
 				console.log("in case add current")
 				MightyHandlerBackground.mighties[request.toBeAdeedTo].addTab(tabs[0].id)
+				if(MightyHandlerBackground.currentMighty == request.toBeAdeedTo){
+					MightyHandlerBackground.mighties[request.toBeAdeedTo].bringTogether()
+				}
 				responseToBeSent = {added: true}
+
 				break	
 			case 'remove current from mighty':
 				console.log("in case remove current")
@@ -125,11 +129,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 				}
 				break	
 			}
+
 			sendResponse(responseToBeSent)
 				
 		})
-		// sendResponse({response: "peins of donkey"})
-	
 	}
 })
 
@@ -214,7 +217,7 @@ chrome.webNavigation.onTabReplaced.addListener(function(details){
 			console.log("the tab with id: " + JSON.stringify(MightyHandlerBackground.mighties[mighty].tabIdsList[indexOfTab]+ " in mighty" + mighty) )
 			MightyHandlerBackground.mighties[mighty].tabIdsList[indexOfTab] = newId
 		}
-		console.log("the new mighties in handler: \n" + JSON.stringify(MightyHandlerBackground.mighties))
+	
 	}
 })
 // can do this cleverer: run query in addTabList for highlighted and add them in the callback, instead of saving all highlighted. this will also make the listeners shorter 
