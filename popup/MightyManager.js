@@ -13,11 +13,11 @@ class MightyManager{
     }
     static changeNumberOnDisplay(name, newLength){
         let mightyDisplay = document.getElementById(name + 'Written')
-        indexOfNumber = mightyDisplay.innerHTML.indexOf('~') + 1
-        newNumber = newLength
-        caption = mightyDisplay.innerHTML.slice(0, indexOfNumber)
-        newInner = caption.concat(newNumber)
-        console.log("new number and capion: ", newInner)
+        let indexOfNumber = mightyDisplay.innerHTML.indexOf('~') + 1
+        // console.log('index of number ' + indexOfNumber)
+        let caption = mightyDisplay.innerHTML.slice(0, indexOfNumber)
+        let newInner = caption.concat(newLength)
+        // console.log("new number and capion: ", newInner)
         mightyDisplay.innerHTML = newInner
     }
 

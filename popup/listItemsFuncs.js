@@ -81,7 +81,8 @@ function sendMessageToAddHIghlightedToMighty(){
     console.log((nameToAddCurrentTo))
     chrome.runtime.sendMessage({current: true, request: "add highlighted", toBeAdeedTo: nameToAddCurrentTo},function(response){
         if(response.added == true){
-            MightyManager.changeNumberOnDisplay(nameToAddCurrentTo, response.newLength)
+            let newLength = response.newLength
+            MightyManager.changeNumberOnDisplay(nameToAddCurrentTo, newLength)
 
         }
     })
@@ -117,17 +118,7 @@ function sendMessageToRemoveHighlightedFromMighty(){
     let nameToRemoveTabsFrom = this.parentElement.id
     chrome.runtime.sendMessage({current: true, request: "remove highlighted from mighty", nameToRemoveTabsFrom: nameToRemoveTabsFrom},
         function(response){
-            // unloadPopup()
-            console.log('response removing ' + JSON.stringify(response))
-            let mightyDisplay = document.getElementById(nameToRemoveTabsFrom + 'Written')
-            indexOfNumber = mightyDisplay.innerHTML.indexOf('~') + 1
-            newNumber = response.newLength
-            caption = mightyDisplay.innerHTML.slice(0, indexOfNumber)
-            newInner = caption.concat(newNumber)
-            console.log("new number and capion: ", newInner)
-            mightyDisplay.innerHTML = newInner
-        
-        // Todo: lower the number of tabs if the response is positive
+            MightyManager.changeNumberOnDisplay(nameToRemoveTabsFrom, response.newLength)
         })
 } 
 

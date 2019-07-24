@@ -53,6 +53,7 @@ class MightyTab {  //make members private
 	addTab(id){
 		// soon to be DEPRECATED
 		var l = this.tabIdsList.length;
+		console.log('inside add tab')
 		if(this.tabIdsList.indexOf(id) == -1 && id > 0){
 			this.tabIdsList[l] = id
 			// MightyHandlerBackground.currentMighty = "none"
@@ -70,10 +71,11 @@ class MightyTab {  //make members private
 	newTabInMighty(){
 		// This opens a new tab in this mighty
 		this.bringTogether()
+		// the next line is necessary!! "this" is not the same this in the callback
+		let thisMighty = this
 		chrome.tabs.create({} , function(newlyOpenedTab){
-			console.log("tab id ", newlyOpenedTab.id)
-			console.log("tab id list \n", thisMighty.tabIdsList)
-			this.addTab(newlyOpenedTab.id)
+			// console.log("tab id list \n", thisMighty.tabIdsList)
+			thisMighty.addTab(newlyOpenedTab.id)
 		})
 	}
 
