@@ -17,6 +17,7 @@ function sendMessageToCollectMightyless(){
 
 function sendMessageToRestoreMighties(){
     chrome.runtime.sendMessage({request: "revive button pressed"}, function(response){
+        console.log('revive pressed: ' + JSON.stringify(response))
         MightyManager.changeCurr('mightyless')
         // console.log('revived mighties now getting response' + response)
         if(response.restored){
@@ -46,7 +47,6 @@ function sendMessageToGatherMighty(){
 function sendMessageToRemoveMighty(){
     var nameToRemove = this.parentElement.id;
     chrome.runtime.sendMessage({request: "remove mighty", toRemove: nameToRemove},function(response){
-        console.log("response to removal",response)
         var listItemToRemove = document.getElementById(nameToRemove);
         document.getElementById("listOfMighties").removeChild(listItemToRemove);
     })
@@ -57,17 +57,14 @@ function sendMessageToRemoveMighty(){
 //!!!!!!!!!!!!!!!!!DEPRECATED!!!!!!!!!!!!!!!!
 function sendMessageToAddToMighty(){
     let nameToAddCurrentTo = this.parentElement.id
-    console.log((nameToAddCurrentTo))
     chrome.runtime.sendMessage({current: true, request: "add current", toBeAdeedTo: nameToAddCurrentTo},function(response){
         // chrome.runtime.sendMessage({current: true, request: "add highlighted", toBeAdeedTo: nameToAddCurrentTo},function(response){
         // ---TODO---: raise the number next to the tab
-        console.log("response\n", response)
         // unloadPopup()
         if(response.added == true){
             let mightyDisplay = document.getElementById(nameToAddCurrentTo + 'Written')
             oldNumber = mightyDisplay.innerHTML[mightyDisplay.innerHTML.length-1]
             mightyDisplay.innerHTML[mightyDisplay.innerHTML.length-1]
-            console.log("old number: ", oldNumber)
             
         }
     })
@@ -78,7 +75,6 @@ function sendMessageToAddToMighty(){
 // sends a message to add current to mighty
 function sendMessageToAddHIghlightedToMighty(){
     let nameToAddCurrentTo = this.parentElement.id
-    console.log((nameToAddCurrentTo))
     chrome.runtime.sendMessage({current: true, request: "add highlighted", toBeAdeedTo: nameToAddCurrentTo},function(response){
         if(response.added == true){
             let newLength = response.newLength
@@ -107,7 +103,6 @@ function sendMessageToRemoveCurrFromMighty(){
         function(response){
             // unloadPopup()
             if(response.currInMighty){
-                console.log("the current page is in mighty. find how to lower the")
             }
         // Todo: lower the number of tabs if the response is positive
         })

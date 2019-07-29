@@ -22,10 +22,10 @@ class MightyTab {  //make members private
 	
 	addTabList(idList){
 		// this should replace addTab and is fit to handle the adding of individual tabs
-		// console.log('this mightys tab id list ' + this.tabIdsList[0])
+		// console.('this mightys tab id list ' + this.tabIdsList[0])
 		// console.log('idList at begining of add' + idList[0]) this works fine
 		if(typeof idList == 'number'){
-			console.log('the type to be added is a number')
+			// console.log('the type to be added is a number')
 			idList = [idList]
 		}
 		let formerLength = this.tabIdsList.length
@@ -53,11 +53,9 @@ class MightyTab {  //make members private
 	addTab(id){
 		// soon to be DEPRECATED
 		var l = this.tabIdsList.length;
-		console.log('inside add tab')
 		if(this.tabIdsList.indexOf(id) == -1 && id > 0){
 			this.tabIdsList[l] = id
 			// MightyHandlerBackground.currentMighty = "none"
-			console.log('this ' + this)
 			if(MightyHandlerBackground.currentMighty == this.name){
 				this.bringTogether()
 			}
@@ -74,7 +72,6 @@ class MightyTab {  //make members private
 		// the next line is necessary!! "this" is not the same this in the callback
 		let thisMighty = this
 		chrome.tabs.create({} , function(newlyOpenedTab){
-			// console.log("tab id list \n", thisMighty.tabIdsList)
 			thisMighty.addTab(newlyOpenedTab.id)
 		})
 	}
@@ -127,7 +124,7 @@ class MightyTab {  //make members private
 		var amountOfTabsInMighty = this.tabIdsList.length;
 		var theNameOfTheMighty = this.name
 		var listOfTabsInMighty = this.tabIdsList
-		
+		MightyHandlerBackground.currentMighty = this.name
 		chrome.tabs.query({},function(tabs2){
 			
 			for(var tab in tabs2){

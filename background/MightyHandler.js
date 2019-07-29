@@ -61,7 +61,7 @@ class MightyHandlerBackground{
                     mightylessList.push(id)
                 }
             }
-            let zombieMighty = new MightyTab("zombie", mightylessList)
+            let zombieMighty = new MightyTab("mightyless", mightylessList)
             zombieMighty.bringTogether();
             //maybe change the current mighty in mighty handler? yes yes i think its better
         })
@@ -69,6 +69,7 @@ class MightyHandlerBackground{
 		
 }
 MightyHandlerBackground.mighties = {}
+// backup is the tabs for the last time the browser opened. is saved when the browser is loaded on storageSyncher.fixerunload
 MightyHandlerBackground.backupMighties = {}
 MightyHandlerBackground.currentMighty = 'mightyless'
 chrome.tabs.query({highlighted : true}, function(tabs){

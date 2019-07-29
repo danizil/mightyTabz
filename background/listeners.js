@@ -29,13 +29,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 
 		MightyHandlerBackground.currentMighty = "mightyless"
 		for(mighty in MightyHandlerBackground.mighties){
-			console.log("after pressing revive in for loop mighty in backround mighty handler\n" + JSON.stringify(MightyHandlerBackground.mighties[mighty]))
+			// console.log("after pressing revive in for loop mighty in backround mighty handler\n" + JSON.stringify(MightyHandlerBackground.mighties[mighty]))
 			MightyHandlerBackground.destroyMighty(mighty)
 		}
 
-		console.log("in revive function, mighties afte zeroed out: \n" + JSON.stringify(MightyHandlerBackground.mighties))
-		console.log("the backup mighties: \n" + JSON.stringify(MightyHandlerBackground.backupMighties))
+		// console.log("in revive function, mighties afte zeroed out: \n" + JSON.stringify(MightyHandlerBackground.mighties))
+		// console.log("the backup mighties: \n" + JSON.stringify(MightyHandlerBackground.backupMighties))
 		StorageSyncher.turnTitleMightyListIntoMightiesList(MightyHandlerBackground.backupMighties)
+		sendResponse({restored: true, mighties: MightyHandlerBackground.mighties})
 		//console.log("the mighties after revive\n" + JSON.stringify(MightyHandlerBackground.mighties))
 		
 		/*
@@ -72,7 +73,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	if(request.request == "gatherMighty"){
 		MightyHandlerBackground.mighties[request.mighty].bringTogether();
-		MightyHandlerBackground.currentMighty = request.mighty;
+		// MightyHandlerBackground.currentMighty = request.mighty;
 		sendResponse({request: "mighties gathered"});
 	}
 })
@@ -108,7 +109,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 		chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs){
 			switch(request.request){
 			case 'add current':
-				console.log("in case add current")
 				MightyHandlerBackground.mighties[request.toBeAdeedTo].addTab(tabs[0].id)
 				if(MightyHandlerBackground.currentMighty == request.toBeAdeedTo){
 					MightyHandlerBackground.mighties[request.toBeAdeedTo].bringTogether()
@@ -117,7 +117,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 
 				break	
 			case 'remove current from mighty':
-				console.log("in case remove current")
 				nameToRemoveFrom = request.nameToRemoveTabFrom
 				// If the current tab's id is in the mighty with the name sent
 				if (MightyHandlerBackground.mighties[nameToRemoveFrom].tabIdsList.indexOf(tabs[0].id) != -1){
@@ -210,11 +209,11 @@ chrome.tabs.onUpdated.addListener(function(tab){
 chrome.webNavigation.onTabReplaced.addListener(function(details){
 	let oldId = details.replacedTabId
 	let newId = details.tabId
-	console.log("a tab has changed id number:\n " + details)
+	// console.log("a tab has changed id number:\n " + details)
 	for(let mighty in MightyHandlerBackground.mighties){
 		let indexOfTab = MightyHandlerBackground.mighties[mighty].tabIdsList.indexOf(oldId)
 		if(indexOfTab > -1){
-			console.log("the tab with id: " + JSON.stringify(MightyHandlerBackground.mighties[mighty].tabIdsList[indexOfTab]+ " in mighty" + mighty) )
+			// console.log("the tab with id: " + JSON.stringify(MightyHandlerBackground.mighties[mighty].tabIdsList[indexOfTab]+ " in mighty" + mighty) )
 			MightyHandlerBackground.mighties[mighty].tabIdsList[indexOfTab] = newId
 		}
 	
