@@ -61,13 +61,20 @@ button:not(.remove):hover	{
 	color: var(--color-s-marker);
 }
 	
-li.mightyLi p	{
+li.mightyLi p, li.menu	{
 	border-left: 5px solid;
 	border-top: 5px solid;
 	border-color:	var(--color-ns-marker);
 	background-color: var(--color-name);
 	color:	var(--color-bg);
 	text-decoration: none;
+}
+li.menu	{
+	border: 0px solid;
+	cursor: pointer;
+}
+li.menu:hover	{
+	background-color: var(--color-s-marker);
 }
 li.mightyLi p:hover	{
 	text-decoration: underline;
