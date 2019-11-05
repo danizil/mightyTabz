@@ -1,4 +1,3 @@
-
 *	{
 	box-sizing: border-box;
 	--color-bg: #E5FCF5;
@@ -72,6 +71,8 @@ li.mightyLi p	{
 }
 li.mightyLi p:hover	{
 	text-decoration: underline;
+	border-left:3px solid;
+	border-left-color:	var(--color-s-marker);
 }
 li.mightyLi p.selected	{
 	border-left:15px solid;
