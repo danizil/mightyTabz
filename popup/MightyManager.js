@@ -3,11 +3,11 @@ class MightyManager{
     static changeCurr(newMighty){
         if(MightyManager.currMighty != 'mightyless' && MightyManager.currMighty != 'none'){
             console.log('currmighty = ' + MightyManager.currMighty)
-            document.getElementById(MightyManager.currMighty + "Written").style.color = "black"
+            document.getElementById(MightyManager.currMighty + "Written").classList.remove('selected')
         }
        
         if(newMighty){
-            document.getElementById(newMighty + "Written").style.color = "red";
+            document.getElementById(newMighty + "Written").classList.add('selected');
             MightyManager.currMighty = newMighty;
         }
         

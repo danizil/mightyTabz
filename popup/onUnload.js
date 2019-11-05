@@ -35,6 +35,7 @@ function unloadPopup(){
                 for(var i = 0; i < l ; i++ ){
                     var listItem = document.createElement("li");
                     listItem.id = MightyManager.mightiesNumTabsArr[i][0];
+		    listItem.classList.add("mightyLi")
 
                     var writtenPart = document.createElement("p")
                     writtenPart.id = MightyManager.mightiesNumTabsArr[i][0] + "Written"
@@ -50,10 +51,8 @@ function unloadPopup(){
                     list.insertBefore(listItem, list.childNodes[0]);
                     let mightyName = writtenPart.innerHTML.slice(0, writtenPart.innerHTML.indexOf("~"))
                     console.log("currmighty" + MightyManager.currMighty)
-                    if(mightyName == MightyManager.currMighty){
-                        writtenPart.style.color = "red";
-                    }
-                    
+                    if(mightyName == MightyManager.currMighty)
+			writtenPart.classList.add('selected') 
                     // these are the associated buttons to each mighty
                     
                     var addButton = document.createElement("button");
@@ -66,7 +65,7 @@ function unloadPopup(){
 
                     var newTabInMightyButton = document.createElement("button");
                     newTabInMightyButton.className = "newtab";
-                    newTabInMightyButton.innerHTML = "N";
+                    newTabInMightyButton.innerHTML = "New Tab";
                     newTabInMightyButton.addEventListener("click", sendMessageToOpenNewTab)
                     listItem.appendChild(newTabInMightyButton)
 
