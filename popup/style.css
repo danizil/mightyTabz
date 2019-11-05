@@ -8,6 +8,7 @@
 	--color-remove: #9A031E;
 	--color-name: 	#3F3F37;
 	font-family: 'Cantarell', sans-serif;
+	letter-spacing: 0.1em;
 
 }
 
@@ -16,6 +17,10 @@ ul , body, form{
     margin: 0px;
     background-color: var(--color-bg);
 }
+body	{
+	padding:10px;
+}
+
 
 button, input[type='submit']	{
 	cursor: pointer;
@@ -23,14 +28,24 @@ button, input[type='submit']	{
 	border-style: 	solid;
 	background-color: var(--color-button);
 }
+
 input[type='submit']	{
 	margin-left: 10px;
 	margin-right: 10px;
 }
+
+input[type='text']:hover{
+	background-color:	var(--color-s-marker);
+	color:	var(--color-bg);
+	text-decoration: bold;
+}
+
 input[type='text']	{
 	border: 0px solid;
 	padding: 3px;
 	background-color: var(--color-bg);
+	font-size: 200%;
+	text-align: center;
 }
 button.remove	{
 	color: var(--color-remove);
@@ -70,10 +85,9 @@ form	{
 
 li.mightyLi {
     cursor: pointer;
-    padding: 10px;
+    margin: 10px;
     list-style-type: none;
     display: grid;
-    width:100%;
     text-align: center;
     position:relative;
     grid-template-columns: 40px auto 40px;
