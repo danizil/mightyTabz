@@ -224,3 +224,19 @@ chrome.tabs.onHighlighted.addListener(function(highlighted){
 	// basically the mistake is with the computer interperting the highlighted object good luck
 	MightyHandlerBackground.highlightedTabs = highlighted.tabIds
 })
+
+//listening to keybord shortcuts
+chrome.commands.onCommand.addListener( function(command)	{
+	switch(command)	{
+		case "open_tab_in_current_mighty":
+			if(!MightyHandlerBackground.currentMighty)
+			MightyHandlerBackground.mighties[MightyHandlerBackground.currentMighty].newTabInMighty()
+		break
+		case "next_mighty":
+			console.log('2')
+		break
+		case "previous_might":
+			console.log('3')
+		break
+	}
+})

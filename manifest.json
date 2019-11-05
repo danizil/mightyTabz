@@ -44,7 +44,26 @@
      	"default_popup": "MightyPopup.html",
      	"default_title": "uh sexy danny"
 
-  	} 
+  	}, 
   
-
+	"commands":	{
+		"open_tab_in_current_mighty":	{
+			"suggested_key":	{
+				"default":	"Alt+T"
+			},
+			"description":	"Open a new Tab from within the current Might."
+		},
+		"next_mighty":	{
+			"suggested_key":	{
+				"default":	"Alt+N"
+			},
+			"description": 	"Move to the next Mighty"
+		},
+		"previous_might":	{
+			"suggested_key":	{
+				"default":	"Alt+P"
+			},
+			"description":	"Move to previous Mighty"
+		}
+	}
 }
