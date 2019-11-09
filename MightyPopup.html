@@ -2,22 +2,25 @@
 <html>
     <head>
         <link rel="stylesheet" href="popup/style.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
+
     </head>
     <body>
         
         <form id = "mightyForm">
-            
-        <input id = "nameInput" type="text">
-        <input id= "submitButton" type="submit" value = "Create Mighty">
+        <input id = "nameInput" type="text" value="Create Mighty">
+        <input id= "submitButton" type="submit" value=" ">
 
         </form>
 
         <ul id = "listOfMighties">
-            <li id="mightyless button"></li>
-            <li id="unpin all button"></li>
-            <li id="revive after crash"></li>
+            <li id="mightyless button" class="menu"></li>
+            <li id="unpin all button" class="menu"></li>
+            <li id="revive after crash" class="menu"></li>
         </ul>
-        
+       
+	<script src = "popup/style.js"></script> 
         <script src = "popup/listItemsFuncs.js"></script>
         <script src = "popup/onUnload.js"></script>
         <script src = "popup/MightyManager.js"></script>

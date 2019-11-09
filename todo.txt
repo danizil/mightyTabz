@@ -1,0 +1,2 @@
+1)	remove closed tags from mighty
+2)	when popup first apear there is no visual indicator that a mighty have been selected
