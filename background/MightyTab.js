@@ -143,12 +143,24 @@ class MightyTab {  //make members private
 					chrome.tabs.update(tabs2[tab].id, {pinned: true});
 				}
 			}
-		})
-	
-		
+		})	
 	}
 	
-	
+	inMighty(tabId)	{
+		return this.tabIdsList.indexOf(tabId) > -1
+	}
+	nextTabInMighty(tabId)	{
+		const list = this.tabIdsList
+		if(list.indexOf(tabId) == -1)
+			return list[0]
+		return list[(list.indexOf(tabId) + 1) % list.length]
+	}	
+	prevTabInMighty(tabId)	{
+		const list = this.tabIdsList
+		if(list.indexOf(tabId) == -1)
+			return list[0]
+		return list[(list.indexOf(tabId) + list.length - 1) % list.length]
+	}	
 
 
 }//end of class mightytab

@@ -224,3 +224,38 @@ chrome.tabs.onHighlighted.addListener(function(highlighted){
 	// basically the mistake is with the computer interperting the highlighted object good luck
 	MightyHandlerBackground.highlightedTabs = highlighted.tabIds
 })
+
+//listening to keybord shortcuts
+chrome.commands.onCommand.addListener( function(command)	{
+	switch(command)	{
+		case "open_tab_in_current_mighty":
+			console.log(MightyHandlerBackground.currentMighty)
+			if(MightyHandlerBackground.currentMighty)
+				MightyHandlerBackground.mighties[MightyHandlerBackground.currentMighty].newTabInMighty()
+		break
+		case "next_tab_in_mighty":
+			chrome.tabs.query({highlighted: true}, (tabs)	=>	{
+				MightyHandlerBackground.getCurrent((mighty) => {
+					chrome.tabs.get(mighty.nextTabInMighty(tabs[0].id), (tab) =>	{
+						chrome.tabs.highlight({tabs:tab.index})
+					})
+				})
+			})
+		break
+		case "previous_tab_in_mighty":
+			chrome.tabs.query({highlighted: true}, (tabs)	=>	{
+				MightyHandlerBackground.getCurrent((mighty) => {
+					chrome.tabs.get(mighty.prevTabInMighty(tabs[0].id), (tab) =>	{
+						chrome.tabs.highlight({tabs:tab.index})
+					})
+				})
+			})
+		break
+	}
+})
+
+function incMod(x, mod)	{
+	return (x + 1)%mod
+}
+
+	
