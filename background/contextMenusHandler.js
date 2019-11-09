@@ -44,8 +44,9 @@ chrome.contextMenus.create(contextMenuOpenNewTabInMighty)
 
 chrome.contextMenus.onClicked.addListener(function(clickData, tab){
 	// the uniqueness of the menu item is its title
+	//do ONE switchcase thing for everything...
 	if(clickData.parentMenuItemId == "addToMighty"){
-	MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id); 
+		MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id); 
 	}
 
 	else if(clickData.parentMenuItemId == "newTabInMighty"){
@@ -59,7 +60,7 @@ chrome.contextMenus.onClicked.addListener(function(clickData, tab){
 		for(let i in mightiesListForThisTab){
 			ContextMenusHandler.addItemToParent(mightiesListForThisTab[i] + "toRemove", mightiesListForThisTab[i], "removeFromMighty")
 		}
-		console.log("mighties list for this tab " + mightiesListForThisTab)
+		// console.log("mighties list for this tab " + mightiesListForThisTab)
 	}
 });
 

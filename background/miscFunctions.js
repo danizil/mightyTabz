@@ -10,7 +10,7 @@ function isEmpty(obj) {
 
 
 function len(obj) {
-	
+	// need this for if obj is not an object and thus has no length 
 	if(obj){
 		return Object.keys(obj).length;
 	}

@@ -77,16 +77,11 @@ class MightyTab {  //make members private
 	}
 
 	removeTab(tabId){
-		// Soon to be DEPRECATED
+		// I keep this only for the onRemoved listener, 
+		// so it doesnt gather mighty when im trying to close tabs
 		if(this.tabIdsList.indexOf(tabId) > -1){
-			var indexToRemove = this.tabIdsList.indexOf(tabId);
-			this.tabIdsList.splice(indexToRemove, 1);
-			if(MightyHandlerBackground.currentMighty == this.name){
-				this.bringTogether()
-			}
-			else if(MightyHandlerBackground.currentMighty == 'mightyless'){
-				MightyHandlerBackground.collectMightyless()
-			}
+			var indexToRemove = this.tabIdsList.indexOf(tabId)
+			this.tabIdsList.splice(indexToRemove, 1)
 			StorageSyncher.sync()
 		}
 		

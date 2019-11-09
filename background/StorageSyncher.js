@@ -10,6 +10,7 @@ class StorageSyncher{
             for(let mighty in MightyHandlerBackground.mighties){
                 if(MightyHandlerBackground.mighties[mighty].tabIdsList[0] != undefined){    
                     for(let i in MightyHandlerBackground.mighties[mighty].tabIdsList){ 
+                        // no choice but to access them one by one. get() doesnt take tab list
                         var tabid = MightyHandlerBackground.mighties[mighty].tabIdsList[i]
                         if(tabid>0){
                             chrome.tabs.get(tabid, function(tab){ 
@@ -41,8 +42,6 @@ class StorageSyncher{
                 //3) for all mighties in mightiesTitles, for every list item, 
                 //   query that index and on callback append the tab's id to Handler.mighties[mighty].tabIdsList        
 
-        //1) gets mightiesTitles from background, an item quite like mighties but with index list instead of id list
-
         chrome.storage.local.get('mightiesTitles', function(gotten){
             if(gotten.mightiesTitles == undefined){// supposed to work only on first run
                 
@@ -56,10 +55,7 @@ class StorageSyncher{
                     //MightyHandlerBackground.mighties[mighty] = new MightyTab(mighty)
                     MightyHandlerBackground.backupMighties[mighty] = new MightyTab(mighty, gotten.mightiesTitles[mighty].tabIdsList)
                 }
-
-                console.log("unloading backup mighties:\n" + JSON.stringify(MightyHandlerBackground.backupMighties))
-                    
-                
+                // console.log("unloading backup mighties:\n" + JSON.stringify(MightyHandlerBackground.backupMighties))
                 StorageSyncher.turnTitleMightyListIntoMightiesList(gotten.mightiesTitles)
               
             }
@@ -79,7 +75,7 @@ class StorageSyncher{
             ContextMenusHandler.addItemToParent(mighty + "inNewTab", mighty, "newTabInMighty")   
             if(mightiesTitles[mighty].tabIdsList != []){
                 for(let i in mightiesTitles[mighty].tabIdsList){
-                    console.log("in turn titles into ids in the second loop\n" + JSON.stringify(mightiesTitles[mighty].tabIdsList[i]))
+                    // console.log("in turn titles into ids in the second loop\n" + JSON.stringify(mightiesTitles[mighty].tabIdsList[i]))
                     chrome.tabs.query({title: mightiesTitles[mighty].tabIdsList[i]}, function(tabs){
                         if(MightyHandlerBackground.mighties[mighty].tabIdsList.indexOf(tabs[0].id) <= -1){
                             MightyHandlerBackground.mighties[mighty].tabIdsList.push(tabs[0].id)

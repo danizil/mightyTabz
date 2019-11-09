@@ -2,16 +2,15 @@ class MightyManager{
 
     static changeCurr(newMighty){
         if(MightyManager.currMighty != 'mightyless' && MightyManager.currMighty != 'none'){
-            console.log('currmighty = ' + MightyManager.currMighty)
             document.getElementById(MightyManager.currMighty + "Written").style.color = "black"
         }
-       
-        if(newMighty){
-            document.getElementById(newMighty + "Written").style.color = "red";
-            MightyManager.currMighty = newMighty;
+        //the second if is here so that we can paint the previous curr black
+        MightyManager.currMighty = newMighty
+        if(newMighty !='mightyless' && newMighty != 'none'){
+            document.getElementById(newMighty + "Written").style.color = "red"
         }
-        
     }
+
     static changeNumberOnDisplay(name, newLength){
         let mightyDisplay = document.getElementById(name + 'Written')
         let indexOfNumber = mightyDisplay.innerHTML.indexOf('~') + 1
