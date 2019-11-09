@@ -229,14 +229,33 @@ chrome.tabs.onHighlighted.addListener(function(highlighted){
 chrome.commands.onCommand.addListener( function(command)	{
 	switch(command)	{
 		case "open_tab_in_current_mighty":
-			if(!MightyHandlerBackground.currentMighty)
-			MightyHandlerBackground.mighties[MightyHandlerBackground.currentMighty].newTabInMighty()
+			console.log(MightyHandlerBackground.currentMighty)
+			if(MightyHandlerBackground.currentMighty)
+				MightyHandlerBackground.mighties[MightyHandlerBackground.currentMighty].newTabInMighty()
 		break
-		case "next_mighty":
-			console.log('2')
+		case "next_tab_in_mighty":
+			chrome.tabs.query({highlighted: true}, (tabs)	=>	{
+				MightyHandlerBackground.getCurrent((mighty) => {
+					chrome.tabs.get(mighty.nextTabInMighty(tabs[0].id), (tab) =>	{
+						chrome.tabs.highlight({tabs:tab.index})
+					})
+				})
+			})
 		break
-		case "previous_might":
-			console.log('3')
+		case "previous_tab_in_mighty":
+			chrome.tabs.query({highlighted: true}, (tabs)	=>	{
+				MightyHandlerBackground.getCurrent((mighty) => {
+					chrome.tabs.get(mighty.prevTabInMighty(tabs[0].id), (tab) =>	{
+						chrome.tabs.highlight({tabs:tab.index})
+					})
+				})
+			})
 		break
 	}
 })
+
+function incMod(x, mod)	{
+	return (x + 1)%mod
+}
+
+	

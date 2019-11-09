@@ -13,7 +13,7 @@ unloadPopup()
 
 function unloadPopup(){
     var unpinAllListItem = document.getElementById("unpin all button")
-    unpinAllListItem.innerHTML = "Unpin All";
+    unpinAllListItem.innerHTML = "Span all";
     unpinAllListItem.addEventListener('click', sendMessageToUnpinAll);
 
     var unassociatedsListItem = document.getElementById("mightyless button")

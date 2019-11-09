@@ -53,6 +53,10 @@ button.remove	{
 	font-weight: bold;
 	font-size: 150%;
 }
+button.remove:hover	{
+	color: var(--color-button);
+	background-color: var(--color-remove);
+}
 button.add, button.removecurrent	{
 	font-size: 200%;
 }

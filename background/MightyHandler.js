@@ -44,7 +44,7 @@ class MightyHandlerBackground{
         return mightiesList
     }
 
-    static collectMightyless(){
+    static collectMightyless(callback){
         chrome.tabs.query({}, function(tabs){
             let tabsInMighties = []
             let mightylessList = [];
@@ -64,6 +64,8 @@ class MightyHandlerBackground{
             let zombieMighty = new MightyTab("mightyless", mightylessList)
             zombieMighty.bringTogether();
             //maybe change the current mighty in mighty handler? yes yes i think its better
+		if(callback)
+			callback(zombieMighty)
         })
     }
 		
@@ -75,5 +77,11 @@ MightyHandlerBackground.currentMighty = 'mightyless'
 chrome.tabs.query({highlighted : true}, function(tabs){
     MightyHandlerBackground.highlightedTabs = [tabs[0].id]
 })
-  
+MightyHandlerBackground.getCurrent = function(ret)	{
+	const mhb = MightyHandlerBackground
+	if(mhb.currentMighty !== "mightyless")
+		ret(mhb.mighties[mhb.currentMighty])
+	else
+		mhb.collectMightyless((mightyless) => {	ret(mightyless)	})
+}
 

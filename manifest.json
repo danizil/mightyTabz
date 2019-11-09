@@ -53,17 +53,17 @@
 			},
 			"description":	"Open a new Tab from within the current Might."
 		},
-		"next_mighty":	{
+		"next_tab_in_mighty":	{
 			"suggested_key":	{
 				"default":	"Alt+N"
 			},
-			"description": 	"Move to the next Mighty"
+			"description": 	"Move to the next tab in the current Mighty"
 		},
-		"previous_might":	{
+		"previous_tab_in_mighty":	{
 			"suggested_key":	{
-				"default":	"Alt+P"
+				"default":	"Alt+B"
 			},
-			"description":	"Move to previous Mighty"
+			"description":	"Move to previous tab in the current Mighty"
 		}
 	}
 }
