@@ -37,6 +37,7 @@ class StorageSyncher{
     }
 
     static mightyFixerUnload(){
+        // loads the mighties at the begining of a browser session, saves backups at the begining
         //1) gets mightiesTitles from background, an item quite like mighties but with index list instead of tablist
             //2) copies mightiesTitles to mighties.
                 //3) for all mighties in mightiesTitles, for every list item, 
@@ -67,6 +68,7 @@ class StorageSyncher{
 
 
     static turnTitleMightyListIntoMightiesList(mightiesTitles){
+        // bad function!! have it return a value and not change some variable
         for(let mighty in mightiesTitles){
             MightyHandlerBackground.mighties[mighty] = new MightyTab(mighty)
             //make context menu item

@@ -36,6 +36,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 		console.log("in revive function, mighties afte zeroed out: \n" + JSON.stringify(MightyHandlerBackground.mighties))
 		console.log("the backup mighties: \n" + JSON.stringify(MightyHandlerBackground.backupMighties))
 		StorageSyncher.turnTitleMightyListIntoMightiesList(MightyHandlerBackground.backupMighties)
+		console.log('in revive, mightyHandelers mighties:\n' + JSON.stringify(MightyHandlerBackground.mighties))
 		sendResponse({restored: true, mighties: MightyHandlerBackground.mighties})
 		//console.log("the mighties after revive\n" + JSON.stringify(MightyHandlerBackground.mighties))
 		

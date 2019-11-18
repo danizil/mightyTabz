@@ -27,7 +27,6 @@ function unloadPopup(){
     document.addEventListener('DOMContentLoaded', function(){
         chrome.runtime.sendMessage({message: "what mighties are there"},function(response){
             if(response.mighties){
-                console.log(MightyManager)
                 MightyManager.mightiesNumTabsArr = response.mighties;
                 MightyManager.currMighty = response.current;
                 var l = MightyManager.mightiesNumTabsArr.length;

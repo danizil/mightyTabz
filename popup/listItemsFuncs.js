@@ -21,6 +21,7 @@ function sendMessageToRestoreMighties(){
         // console.log('revived mighties now getting response' + response)
         if(response.restored){
             mighties = response.mighties
+            console.log(JSON.stringify(response.mighties))
             for(let mighty in mighties){
                 MightyManager.changeNumberOnDisplay(mighty.name, mighty.tabIdsList.length)
             }
