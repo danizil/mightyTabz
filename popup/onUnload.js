@@ -40,6 +40,7 @@ function unloadPopup(){
                     var writtenPart = document.createElement("p")
                     writtenPart.id = MightyManager.mightiesNumTabsArr[i][0] + "Written"
                     console.log(writtenPart.id)
+			writtenPart.classList.add("mightyP")
                     writtenPart.innerHTML = MightyManager.mightiesNumTabsArr[i][0] + "~" + MightyManager.mightiesNumTabsArr[i][1];
                     // alert("43unload mighties array\n" + mightiesNumTabsArr)
                     writtenPart.addEventListener('click', sendMessageToGatherMighty);
@@ -84,6 +85,7 @@ function unloadPopup(){
                     listItem.appendChild(removeButton)
                     
                 }
+		setStyle()
                 
             }
 

@@ -1,14 +1,8 @@
 class MightyManager{
 
     static changeCurr(newMighty){
-        if(MightyManager.currMighty != 'mightyless' && MightyManager.currMighty != 'none'){
-            document.getElementById(MightyManager.currMighty + "Written").style.color = "black"
-        }
         //the second if is here so that we can paint the previous curr black
         MightyManager.currMighty = newMighty
-        if(newMighty !='mightyless' && newMighty != 'none'){
-            document.getElementById(newMighty + "Written").style.color = "red"
-        }
     }
 
     static changeNumberOnDisplay(name, newLength){
