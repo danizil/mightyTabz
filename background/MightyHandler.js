@@ -21,6 +21,16 @@ class MightyHandlerBackground{
     
     }
 
+
+    static getMightiesLengths(mighties){
+        let mightyLengths = {}
+        for (let mighty in mighties){
+            console.log(JSON.stringify(mighties[mighty].tabIdsList))
+            mightyLengths[mighty] = mighties[mighty].tabIdsList.length
+        }
+        return mightyLengths
+    }
+
 		
     static destroyMighty(name){
         

@@ -3,6 +3,7 @@
 //when starting the extension unpin all tabs
 chrome.tabs.query({},function(tabs){
 	var amountOfOpenTabs = tabs.length;
+	console.log("")
 	//unpin all tabs
 	for(var i = amountOfOpenTabs - 1 ; i >-1; i--){
 			chrome.tabs.update(tabs[i].id, {pinned: false});

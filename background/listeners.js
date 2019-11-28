@@ -27,17 +27,22 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	if(request.request == "revive button pressed"){
 
+		// this kills the existing mighties and needs to be moved to mightyhandler
 		MightyHandlerBackground.currentMighty = "mightyless"
 		for(mighty in MightyHandlerBackground.mighties){
 			console.log("after pressing revive in for loop mighty in backround mighty handler\n" + JSON.stringify(MightyHandlerBackground.mighties[mighty]))
 			MightyHandlerBackground.destroyMighty(mighty)
 		}
 
-		console.log("in revive function, mighties afte zeroed out: \n" + JSON.stringify(MightyHandlerBackground.mighties))
-		console.log("the backup mighties: \n" + JSON.stringify(MightyHandlerBackground.backupMighties))
+		// console.log("in revive function, mighties afte zeroed out: \n" + JSON.stringify(MightyHandlerBackground.mighties))
+		// console.log("the backup mighties: \n" + JSON.stringify(MightyHandlerBackground.backupMighties))
 		StorageSyncher.turnTitleMightyListIntoMightiesList(MightyHandlerBackground.backupMighties)
-		console.log('in revive, mightyHandelers mighties:\n' + JSON.stringify(MightyHandlerBackground.mighties))
-		sendResponse({restored: true, mighties: MightyHandlerBackground.mighties})
+		// next line and response will give background mighties that are nothing because of an asynchronous function in turnTitleMighties....
+		mightiesNameLength = MightyHandlerBackground.getMightiesLengths(MightyHandlerBackground.backupMighties)
+		console.log('in revive, mightyHandelers mighties:\n' + JSON.stringify(mightiesNameLength))
+		// well i dont have to send the mighties, only the lengths...
+		
+		sendResponse({restored: true, mightiesNameLength: mightiesNameLength})
 		//console.log("the mighties after revive\n" + JSON.stringify(MightyHandlerBackground.mighties))
 		
 		/*
@@ -175,12 +180,13 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){
 })
 
 // listener for when there is an opener tab id
-chrome.tabs.onCreated.addListener(function(newlyOpenedTab){
-	if(newlyOpenedTab.openerTabId){
-		console.log('opener tab ' + newlyOpenedTab.openerTabId)
-	}
-})
+// chrome.tabs.onCreated.addListener(function(newlyOpenedTab){
+// 	if(newlyOpenedTab.openerTabId){
+// 		console.log('opener tab ' + newlyOpenedTab.openerTabId)
+// 	}
+// })
 //tab removal, removes tab from mighty. this is shitty and will be changed
+
 
 var mainWindow //this is a patch. will later be changed to a window class with mightywindow handler whatever
 var mainWindowId
@@ -212,9 +218,11 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeWithoutWindow){
 })
 
 chrome.tabs.onUpdated.addListener(function(tab){
+	// this is important when a tab changes it's title
 	StorageSyncher.sync()
 })
 
+// this listener handels when a tab changes it's id
 chrome.webNavigation.onTabReplaced.addListener(function(details){
 	let oldId = details.replacedTabId
 	let newId = details.tabId
@@ -262,6 +270,12 @@ chrome.commands.onCommand.addListener( function(command)	{
 		break
 	}
 })
+
+
+chrome.sessions.onChanged.addListener(function(){
+	console.log("sessions.onChanged fired ")
+})
+// onChanged fires when something of value closes (not new tab)
 
 function incMod(x, mod)	{
 	return (x + 1)%mod

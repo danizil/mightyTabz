@@ -42,7 +42,7 @@
   	"browser_action" :{
     	"default_icon" : "apple-11.png",
      	"default_popup": "MightyPopup.html",
-     	"default_title": "uh sexy danny"
+     	"default_title": "Mighty Tabs"
 
   	}, 
   

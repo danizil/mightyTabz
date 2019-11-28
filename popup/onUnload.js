@@ -21,7 +21,7 @@ function unloadPopup(){
     unassociatedsListItem.addEventListener('click', sendMessageToCollectMightyless);
 
     var reveiveListItem = document.getElementById("revive after crash")
-    reveiveListItem.innerHTML = "Revive After crash"
+    reveiveListItem.innerHTML = "Revive After Crash"
     reveiveListItem.addEventListener('click', sendMessageToRestoreMighties)
 
     document.addEventListener('DOMContentLoaded', function(){
@@ -42,7 +42,7 @@ function unloadPopup(){
                     console.log(writtenPart.id)
 			writtenPart.classList.add("mightyP")
                     writtenPart.innerHTML = MightyManager.mightiesNumTabsArr[i][0] + "~" + MightyManager.mightiesNumTabsArr[i][1];
-                    // alert("43unload mighties array\n" + mightiesNumTabsArr)
+                    // alert(" 3unload mighties array\n" + mightiesNumTabsArr)
                     writtenPart.addEventListener('click', sendMessageToGatherMighty);
                     listItem.appendChild(writtenPart);
                     

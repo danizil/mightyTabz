@@ -140,7 +140,7 @@ class MightyTab {  //make members private
 			}
 		})	
 	}
-	
+
 	inMighty(tabId)	{
 		return this.tabIdsList.indexOf(tabId) > -1
 	}
@@ -165,3 +165,7 @@ MightyTab.prototype.toString = function printMighty(){
 	return tbr;
 }
  
+MightyTab.prototype.length = function(){
+	return this.tabIdsList.length
+}
+

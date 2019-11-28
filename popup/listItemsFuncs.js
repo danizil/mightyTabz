@@ -18,12 +18,13 @@ function sendMessageToCollectMightyless(){
 function sendMessageToRestoreMighties(){
     chrome.runtime.sendMessage({request: "revive button pressed"}, function(response){
         MightyManager.changeCurr('mightyless')
-        // console.log('revived mighties now getting response' + response)
+        console.log('revived mighties now getting response' + response)
         if(response.restored){
-            mighties = response.mighties
-            console.log(JSON.stringify(response.mighties))
-            for(let mighty in mighties){
-                MightyManager.changeNumberOnDisplay(mighty.name, mighty.tabIdsList.length)
+            let mightiesNameLength = response.mightiesNameLength
+            // console.log('the mighties name length to be printed' + JSON.stringify(response.mightiesNameLength))
+            for(let mighty in mightiesNameLength){
+                console.log('what we put in changenumber on display. name and length' + mighty + mightiesNameLength[mighty])
+                MightyManager.changeNumberOnDisplay(mighty, mightiesNameLength[mighty])
             }
         }
     })
