@@ -59,11 +59,17 @@
 			},
 			"description": 	"Move to the next tab in the current Mighty"
 		},
-		"previous_tab_in_mighty":	{
+		"add_current_tab_to_mighty":	{
 			"suggested_key":	{
-				"default":	"Alt+B"
+				"default":	"Alt+A"
 			},
-			"description":	"Move to previous tab in the current Mighty"
+			"description":	"Add the current page to the current Mighty"
+		},
+		"remove_current_tab_from_mighty":	{
+			"suggested_key":	{
+				"default":	"Alt+R"
+			},
+			"description":	"Add the current page to the current Mighty"
 		}
 	}
 }

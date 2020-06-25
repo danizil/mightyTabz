@@ -8,16 +8,13 @@ class MightyHandlerBackground{
 
         MightyHandlerBackground.mighties[name] = new MightyTab(name);
         //make context menu item
-        
         ContextMenusHandler.addItemToParent(name, name, "addToMighty")
         ContextMenusHandler.addItemToParent(name + "inNewTab", name, "newTabInMighty")
         chrome.contextMenus.onClicked.addListener(function(clickData, tab){
             MightyHandlerBackground.mighties[clickData.menuItemId].addTab(tab.id); 
         });
 
-
         StorageSyncher.sync();
-    
     
     }
 

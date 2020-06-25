@@ -15,10 +15,10 @@ console.log('made')
 	}
 }
 function setStyle()	{
-
 	var mightyPs = document.getElementsByClassName("mightyP")
 	for(var i = 0; i < mightyPs.length; i++)	{
 		console.log("making")
 		mightyPs[i].addEventListener('mousedown', clickEventFoo(mightyPs[i]))
 	}
 }
+

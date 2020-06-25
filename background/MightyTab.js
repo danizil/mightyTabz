@@ -79,6 +79,7 @@ class MightyTab {  //make members private
 	removeTab(tabId){
 		// I keep this only for the onRemoved listener, 
 		// so it doesnt gather mighty when im trying to close tabs
+		console.log('removeTab')
 		if(this.tabIdsList.indexOf(tabId) > -1){
 			var indexToRemove = this.tabIdsList.indexOf(tabId)
 			this.tabIdsList.splice(indexToRemove, 1)
