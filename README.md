@@ -1,5 +1,5 @@
 # MightyTabs
-An extension for managing open browser tabs. A popup window on the side contains a list of user created categories. Clicking a list item results in pinning all irrelevant tabs, thereby creating an ordered working environment, and helps to identify unwanted tabs.
+An extension for managing open browser tabs. A popup window on the side contains a list of user created categories. Clicking a list item results in pinning all irrelevant tabs which creates an ordered working environment, and helps to identify unwanted tabs.
 
 To switch to the mighty of your choice simply press the caption and it will turn red. 
 
